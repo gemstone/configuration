@@ -52,7 +52,7 @@ namespace Gemstone.Configuration.SQLite
         /// Gets or sets the flag that determines whether
         /// to ignore attempts to update configuration.
         /// </summary>
-        public bool IgnoresModifications { get; set; }
+        public bool IgnoreModifications { get; set; }
 
         /// <summary>
         /// Gets or sets the path to the database file.

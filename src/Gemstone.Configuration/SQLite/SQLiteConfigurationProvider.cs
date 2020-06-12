@@ -44,7 +44,7 @@ namespace Gemstone.Configuration.SQLite
         {
             ConnectionString = options.ConnectionString;
             TableName = options.TableName;
-            IgnoresModifications = options.IgnoresModifications;
+            IgnoresModifications = options.IgnoreModifications;
         }
 
         /// <summary>
