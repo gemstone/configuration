@@ -33,7 +33,6 @@ namespace Gemstone.Configuration.SQLite
     {
         private string ConnectionString { get; }
         private string TableName { get; }
-        private bool IgnoresModifications { get; }
         private bool IsTableCreated { get; set; }
 
         /// <summary>
@@ -44,7 +43,6 @@ namespace Gemstone.Configuration.SQLite
         {
             ConnectionString = options.ConnectionString;
             TableName = options.TableName;
-            IgnoresModifications = options.IgnoreModifications;
         }
 
         /// <summary>
@@ -77,9 +75,6 @@ namespace Gemstone.Configuration.SQLite
         /// <param name="value">The value to set.</param>
         public override void Set(string key, string value)
         {
-            if (IgnoresModifications)
-                return;
-
             base.Set(key, value);
 
             using SqliteConnection connection = new SqliteConnection(ConnectionString);
