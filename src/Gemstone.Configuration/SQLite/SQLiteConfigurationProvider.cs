@@ -75,6 +75,12 @@ namespace Gemstone.Configuration.SQLite
         /// <param name="value">The value to set.</param>
         public override void Set(string key, string value)
         {
+            if (string.IsNullOrEmpty(value))
+            {
+                Remove(key);
+                return;
+            }
+
             base.Set(key, value);
 
             using SqliteConnection connection = new SqliteConnection(ConnectionString);
@@ -85,6 +91,21 @@ namespace Gemstone.Configuration.SQLite
             command.CommandText = $"INSERT INTO {TableName} VALUES(@key, @value) ON CONFLICT(Key) DO UPDATE SET Value = @value";
             command.Parameters.AddWithValue("@key", key);
             command.Parameters.AddWithValue("@value", value);
+            command.ExecuteNonQuery();
+        }
+
+        private void Remove(string key)
+        {
+            if (!Data.Remove(key))
+                return;
+
+            using SqliteConnection connection = new SqliteConnection(ConnectionString);
+            connection.Open();
+            CreateTable(connection);
+
+            using SqliteCommand command = connection.CreateCommand();
+            command.CommandText = $"DELETE FROM {TableName} WHERE Key = @key";
+            command.Parameters.AddWithValue("@key", key);
             command.ExecuteNonQuery();
         }
 
