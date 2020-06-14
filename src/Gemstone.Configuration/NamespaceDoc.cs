@@ -28,7 +28,7 @@ namespace Gemstone.Configuration
     /// <summary>
     /// The <see cref="Gemstone.Configuration"/> namespace organizes all Gemstone library functionality
     /// related to configuration. The root configuration namespace also includes common configuration classes,
-    /// e.g., <see cref="Class"/>.
+    /// e.g., <see cref="ConfigurationBuilderExtensions"/>.
     /// </summary>
     [CompilerGenerated]
     class NamespaceDoc
