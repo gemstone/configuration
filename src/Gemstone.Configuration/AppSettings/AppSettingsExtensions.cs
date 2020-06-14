@@ -26,7 +26,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
 
-namespace Gemstone.Configuration
+namespace Gemstone.Configuration.AppSettings
 {
     /// <summary>
     /// Defines extensions for managing app settings.

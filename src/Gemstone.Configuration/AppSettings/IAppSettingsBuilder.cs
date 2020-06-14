@@ -23,7 +23,7 @@
 
 using System.Collections.Generic;
 
-namespace Gemstone.Configuration
+namespace Gemstone.Configuration.AppSettings
 {
     /// <summary>
     /// Builder for app settings with descriptions.
