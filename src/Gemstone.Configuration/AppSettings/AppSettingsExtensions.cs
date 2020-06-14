@@ -33,6 +33,9 @@ namespace Gemstone.Configuration.AppSettings
     /// </summary>
     public static class AppSettingsExtensions
     {
+        private const string InitialValueKey = "__AppSettings:InitialValue";
+        private const string DescriptionKey = "__AppSettings:InitialValue";
+
         /// <summary>
         /// Adds an <see cref="IConfigurationSource"/> for app settings to the given <see cref="IConfigurationBuilder"/>.
         /// </summary>
@@ -79,11 +82,27 @@ namespace Gemstone.Configuration.AppSettings
             return configuration[key];
         }
 
+        /// <summary>
+        /// Gets the initial value of the given app setting.
+        /// </summary>
+        /// <param name="setting">The app setting.</param>
+        /// <returns>The initial value of the app setting.</returns>
+        public static string? GetAppSettingInitialValue(this IConfigurationSection setting) =>
+            setting[InitialValueKey];
+
+        /// <summary>
+        /// Gets the description of the given app setting.
+        /// </summary>
+        /// <param name="setting">The app setting.</param>
+        /// <returns>The description of the app setting.</returns>
+        public static string? GetAppSettingDescription(this IConfigurationSection setting) =>
+            setting[DescriptionKey];
+
         private static string ToInitialValueKey(string appSettingName) =>
-            $"{appSettingName}:__AppSettings:InitialValue";
+            $"{appSettingName}:{InitialValueKey}";
 
         private static string ToDescriptionKey(string appSettingName) =>
-            $"{appSettingName}:__AppSettings:Description";
+            $"{appSettingName}:{DescriptionKey}";
 
         // Implementation of IAppSettingsBuilder that works
         // with the extension methods defined in this class.
