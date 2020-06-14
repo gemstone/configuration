@@ -61,7 +61,7 @@ namespace Gemstone.Configuration.AppSettings
         /// <param name="configuration">The configuration that contains the app setting.</param>
         /// <param name="name">The name of the app setting.</param>
         /// <returns>The initial value of the app setting.</returns>
-        public static string GetAppSettingInitialValue(this IConfiguration configuration, string name)
+        public static string? GetAppSettingInitialValue(this IConfiguration configuration, string name)
         {
             string key = ToInitialValueKey(name);
             return configuration[key];
@@ -73,7 +73,7 @@ namespace Gemstone.Configuration.AppSettings
         /// <param name="configuration">The configuration that contains the app setting.</param>
         /// <param name="name">The name of the app setting.</param>
         /// <returns>The initial value of the app setting.</returns>
-        public static string GetAppSettingDescription(this IConfiguration configuration, string name)
+        public static string? GetAppSettingDescription(this IConfiguration configuration, string name)
         {
             string key = ToDescriptionKey(name);
             return configuration[key];
