@@ -1,7 +1,7 @@
 ﻿//******************************************************************************************************
 //  NamespaceDoc.cs - Gbtc
 //
-//  Copyright © 2019, Grid Protection Alliance.  All Rights Reserved.
+//  Copyright © 2020, Grid Protection Alliance.  All Rights Reserved.
 //
 //  Licensed to the Grid Protection Alliance (GPA) under one or more contributor license agreements. See
 //  the NOTICE file distributed with this work for additional information regarding copyright ownership.
@@ -16,19 +16,20 @@
 //
 //  Code Modification History:
 //  ----------------------------------------------------------------------------------------------------
-//  10/16/2019 - J. Ritchie Carroll
+//  06/14/2020 - Stephen C. Wills
 //       Generated original version of source code.
 //
 //******************************************************************************************************
 
 using System.Runtime.CompilerServices;
+using Microsoft.Extensions.Configuration;
 
-namespace Gemstone.Configuration
+namespace Gemstone.Configuration.SQLite
 {
     /// <summary>
-    /// The <see cref="Configuration"/> namespace organizes all Gemstone library functionality
-    /// related to configuration. The root configuration namespace also includes common configuration classes,
-    /// e.g., <see cref="ConfigurationBuilderExtensions"/>.
+    /// The <see cref="SQLite"/> namespace contains an implementation of
+    /// <see cref="IConfigurationSource"/> that uses a SQLite database
+    /// table to provide the configuration settings.
     /// </summary>
     [CompilerGenerated]
     class NamespaceDoc
