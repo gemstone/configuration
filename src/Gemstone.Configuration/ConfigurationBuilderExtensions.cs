@@ -52,7 +52,7 @@ namespace Gemstone.Configuration
             builder.AddAppSettings(configureAppSettings).AsReadOnly();
 
             if (useINI)
-                builder.AddGemstoneINIFile();
+                builder.AddGemstoneINIFile().AsReadOnly();
 
             builder.AddSQLite();
             builder.AddEnvironmentVariables("GEMSTONE_").AsReadOnly();
