@@ -92,6 +92,7 @@ namespace Gemstone.Configuration.SQLite
             command.Parameters.AddWithValue("@key", key);
             command.Parameters.AddWithValue("@value", value);
             command.ExecuteNonQuery();
+            OnReload();
         }
 
         private void Remove(string key)
@@ -107,6 +108,7 @@ namespace Gemstone.Configuration.SQLite
             command.CommandText = $"DELETE FROM {TableName} WHERE Key = @key";
             command.Parameters.AddWithValue("@key", key);
             command.ExecuteNonQuery();
+            OnReload();
         }
 
         private void CreateTable(SqliteConnection connection)
