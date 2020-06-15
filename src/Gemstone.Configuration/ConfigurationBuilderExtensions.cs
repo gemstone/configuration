@@ -89,7 +89,7 @@ namespace Gemstone.Configuration
 
         private static string GetINIFilePath(string fileName)
         {
-            Environment.SpecialFolder specialFolder = Environment.SpecialFolder.ApplicationData;
+            Environment.SpecialFolder specialFolder = Environment.SpecialFolder.CommonApplicationData;
             string appDataPath = Environment.GetFolderPath(specialFolder);
 
             Assembly? entryAssembly = Assembly.GetEntryAssembly();
