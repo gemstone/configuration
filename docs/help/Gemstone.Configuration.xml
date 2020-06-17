@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>Gemstone.Configuration</name>
+  </assembly>
+  <members>
+    <member name="T:Gemstone.Configuration.ConfigurationBuilderExtensions">
+      <summary>
+            Defines extensions for setting up configuration defaults for Gemstone projects.
+            </summary>
+    </member>
+    <member name="M:Gemstone.Configuration.ConfigurationBuilderExtensions.ConfigureGemstoneDefaults(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.Action{Gemstone.Configuration.AppSettings.IAppSettingsBuilder},System.Boolean)">
+      <summary>
+            Configures the builder using the default configuration sources for Gemstone projects.
+            </summary>
+      <param name="builder">The configuration builder.</param>
+      <param name="configureAppSettings">Action for configuring default app settings.</param>
+      <param name="useINI">INI file can be produced in lieu of a UI for configuration.</param>
+      <returns>The configuration builder.</returns>
+    </member>
+    <member name="T:Gemstone.Configuration.AppSettings.AppSettingsExtensions">
+      <summary>
+            Defines extensions for managing app settings.
+            </summary>
+    </member>
+    <member name="M:Gemstone.Configuration.AppSettings.AppSettingsExtensions.AddAppSettings(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.Action{Gemstone.Configuration.AppSettings.IAppSettingsBuilder})">
+      <summary>
+            Adds an <see cref="T:Microsoft.Extensions.Configuration.IConfigurationSource" /> for app settings to the given <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder" />.
+            </summary>
+      <param name="configurationBuilder">The configuration builder.</param>
+      <param name="buildAction">The action to build app settings.</param>
+      <returns>The configuration builder.</returns>
+    </member>
+    <member name="M:Gemstone.Configuration.AppSettings.AppSettingsExtensions.GetAppSettingDescription(Microsoft.Extensions.Configuration.IConfiguration,System.String)">
+      <summary>
+            Gets the description of the app setting with the given name.
+            </summary>
+      <param name="configuration">The configuration that contains the app setting.</param>
+      <param name="name">The name of the app setting.</param>
+      <returns>The initial value of the app setting.</returns>
+    </member>
+    <member name="M:Gemstone.Configuration.AppSettings.AppSettingsExtensions.GetAppSettingDescription(Microsoft.Extensions.Configuration.IConfigurationSection)">
+      <summary>
+            Gets the description of the given app setting.
+            </summary>
+      <param name="setting">The app setting.</param>
+      <returns>The description of the app setting.</returns>
+    </member>
+    <member name="M:Gemstone.Configuration.AppSettings.AppSettingsExtensions.GetAppSettingInitialValue(Microsoft.Extensions.Configuration.IConfiguration,System.String)">
+      <summary>
+            Gets the initial value of the app setting with the given name.
+            </summary>
+      <param name="configuration">The configuration that contains the app setting.</param>
+      <param name="name">The name of the app setting.</param>
+      <returns>The initial value of the app setting.</returns>
+    </member>
+    <member name="M:Gemstone.Configuration.AppSettings.AppSettingsExtensions.GetAppSettingInitialValue(Microsoft.Extensions.Configuration.IConfigurationSection)">
+      <summary>
+            Gets the initial value of the given app setting.
+            </summary>
+      <param name="setting">The app setting.</param>
+      <returns>The initial value of the app setting.</returns>
+    </member>
+    <member name="T:Gemstone.Configuration.AppSettings.IAppSettingsBuilder">
+      <summary>
+            Builder for app settings with descriptions.
+            </summary>
+    </member>
+    <member name="M:Gemstone.Configuration.AppSettings.IAppSettingsBuilder.Add(System.String,System.String,System.String)">
+      <summary>
+            Adds an app setting to the builder.
+            </summary>
+      <param name="name">The name of the setting.</param>
+      <param name="value">The value of the setting.</param>
+      <param name="description">A description of the setting.</param>
+      <returns>The app settings builder.</returns>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="name" /> is a duplicate of a previously added app setting</exception>
+    </member>
+    <member name="M:Gemstone.Configuration.AppSettings.IAppSettingsBuilder.Build">
+      <summary>
+            Converts the app settings into a collection of key/value pairs.
+            </summary>
+      <returns>The collection of key/value pairs.</returns>
+    </member>
+    <member name="T:Gemstone.Configuration.ReadOnly.ReadOnlyConfigurationExtensions">
+      <summary>
+            Defines extensions for adding read-only configuration providers.
+            </summary>
+    </member>
+    <member name="M:Gemstone.Configuration.ReadOnly.ReadOnlyConfigurationExtensions.AsReadOnly(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
+      <summary>
+            Converts the most recently added configuration source into a read-only configuration source.
+            </summary>
+      <param name="builder">The configuration builder.</param>
+      <returns>The configuration builder.</returns>
+    </member>
+    <member name="M:Gemstone.Configuration.ReadOnly.ReadOnlyConfigurationExtensions.ConfigureReadOnly(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.Action{Microsoft.Extensions.Configuration.IConfigurationBuilder})">
+      <summary>
+            Configures an <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder" /> with read-only configuration sources.
+            </summary>
+      <param name="builder">The configuration builder.</param>
+      <param name="builderAction">The action to set up configuration sources that will be made read-only.</param>
+      <returns>The configuration builder.</returns>
+    </member>
+    <member name="T:Gemstone.Configuration.ReadOnly.ReadOnlyConfigurationProvider">
+      <summary>
+            Wrapper for <see cref="T:Microsoft.Extensions.Configuration.IConfigurationProvider" /> to block calls
+            to <see cref="M:Microsoft.Extensions.Configuration.IConfigurationProvider.Set(System.String,System.String)" />.
+            </summary>
+    </member>
+    <member name="M:Gemstone.Configuration.ReadOnly.ReadOnlyConfigurationProvider.#ctor(Microsoft.Extensions.Configuration.IConfigurationProvider)">
+      <summary>
+            Creates a new instance of the <see cref="T:Gemstone.Configuration.ReadOnly.ReadOnlyConfigurationProvider" /> class.
+            </summary>
+      <param name="provider"></param>
+    </member>
+    <member name="M:Gemstone.Configuration.ReadOnly.ReadOnlyConfigurationProvider.GetChildKeys(System.Collections.Generic.IEnumerable{System.String},System.String)">
+      <summary>
+            Returns the immediate descendant configuration keys for a given parent path based
+            on this <see cref="T:Microsoft.Extensions.Configuration.IConfigurationProvider" />s data and the set of keys returned by
+            all the preceding <see cref="T:Microsoft.Extensions.Configuration.IConfigurationProvider" />s.
+            </summary>
+      <param name="earlierKeys">The child keys returned by the preceding providers for the same parent path.</param>
+      <param name="parentPath">The parent path.</param>
+      <returns>The child keys.</returns>
+    </member>
+    <member name="M:Gemstone.Configuration.ReadOnly.ReadOnlyConfigurationProvider.GetReloadToken">
+      <summary>
+            Returns a change token if this provider supports change tracking, null otherwise.
+            </summary>
+      <returns>The change token.</returns>
+    </member>
+    <member name="M:Gemstone.Configuration.ReadOnly.ReadOnlyConfigurationProvider.Load">
+      <summary>
+            Loads configuration values from the source represented by this <see cref="T:Microsoft.Extensions.Configuration.IConfigurationProvider" />.
+            </summary>
+    </member>
+    <member name="M:Gemstone.Configuration.ReadOnly.ReadOnlyConfigurationProvider.Set(System.String,System.String)">
+      <summary>
+            Sets a configuration value for the specified key.
+            </summary>
+      <param name="key">The key.</param>
+      <param name="value">The value.</param>
+    </member>
+    <member name="M:Gemstone.Configuration.ReadOnly.ReadOnlyConfigurationProvider.TryGet(System.String,System.String@)">
+      <summary>
+            Tries to get a configuration value for the specified key.
+            </summary>
+      <param name="key">The key.</param>
+      <param name="value">The value.</param>
+      <returns>True if a value for the specified key was found, otherwise false.</returns>
+    </member>
+    <member name="T:Gemstone.Configuration.ReadOnly.ReadOnlyConfigurationSource">
+      <summary>
+            Wrapper for <see cref="T:Microsoft.Extensions.Configuration.IConfigurationSource" /> to block calls
+            to <see cref="M:Microsoft.Extensions.Configuration.IConfigurationProvider.Set(System.String,System.String)" />.
+            </summary>
+    </member>
+    <member name="M:Gemstone.Configuration.ReadOnly.ReadOnlyConfigurationSource.#ctor(Microsoft.Extensions.Configuration.IConfigurationSource)">
+      <summary>
+            Creates a new instance of the <see cref="T:Gemstone.Configuration.ReadOnly.ReadOnlyConfigurationSource" /> class.
+            </summary>
+      <param name="source">The source to be made read-only.</param>
+    </member>
+    <member name="M:Gemstone.Configuration.ReadOnly.ReadOnlyConfigurationSource.Build(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
+      <summary>
+            Builds the <see cref="T:Microsoft.Extensions.Configuration.IConfigurationProvider" /> for this source.
+            </summary>
+      <param name="builder">The configuration builder</param>
+      <returns>The read-only configuration provider.</returns>
+    </member>
+    <member name="T:Gemstone.Configuration.SQLite.SQLiteConfigurationExtensions">
+      <summary>
+            Defines extensions for adding the <see cref="T:Gemstone.Configuration.SQLite.SQLiteConfigurationSource" />
+            to an <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder" /> pipeline.
+            </summary>
+    </member>
+    <member name="M:Gemstone.Configuration.SQLite.SQLiteConfigurationExtensions.AddSQLite(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
+      <summary>
+            Adds the <see cref="T:Gemstone.Configuration.SQLite.SQLiteConfigurationSource" /> to the given <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder" />.
+            </summary>
+      <param name="builder">The configuration builder.</param>
+      <returns>The configuration builder.</returns>
+    </member>
+    <member name="M:Gemstone.Configuration.SQLite.SQLiteConfigurationExtensions.AddSQLite(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.Action{Gemstone.Configuration.SQLite.SQLiteConfigurationOptions})">
+      <summary>
+            Adds the <see cref="T:Gemstone.Configuration.SQLite.SQLiteConfigurationSource" /> to the given <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder" />.
+            </summary>
+      <param name="builder">The configuration builder.</param>
+      <param name="optionsAction">The action called to configure the <see cref="T:Gemstone.Configuration.SQLite.SQLiteConfigurationSource" />.</param>
+      <returns>The configuration builder.</returns>
+    </member>
+    <member name="T:Gemstone.Configuration.SQLite.SQLiteConfigurationOptions">
+      <summary>
+            Defines parameters for the <see cref="T:Gemstone.Configuration.SQLite.SQLiteConfigurationSource" />.
+            </summary>
+    </member>
+    <member name="M:Gemstone.Configuration.SQLite.SQLiteConfigurationOptions.#ctor">
+      <summary>
+            Creates a new instance of the <see cref="T:Gemstone.Configuration.SQLite.SQLiteConfigurationOptions" /> class.
+            </summary>
+    </member>
+    <member name="P:Gemstone.Configuration.SQLite.SQLiteConfigurationOptions.Cache">
+      <summary>
+            Gets or sets the cahcing mode used
+            by connections to the database.
+            </summary>
+    </member>
+    <member name="P:Gemstone.Configuration.SQLite.SQLiteConfigurationOptions.ConnectionString">
+      <summary>
+            Gets the connection string as configured
+            by the other properties in this class.
+            </summary>
+    </member>
+    <member name="P:Gemstone.Configuration.SQLite.SQLiteConfigurationOptions.DataSource">
+      <summary>
+            Gets or sets the path to the database file.
+            </summary>
+    </member>
+    <member name="P:Gemstone.Configuration.SQLite.SQLiteConfigurationOptions.ForeignKeys">
+      <summary>
+            Gets or sets the flag that determines whether
+            to enable foreign key constraints.
+            </summary>
+    </member>
+    <member name="P:Gemstone.Configuration.SQLite.SQLiteConfigurationOptions.Password">
+      <summary>
+            Gets or sets the encryption key.
+            </summary>
+    </member>
+    <member name="P:Gemstone.Configuration.SQLite.SQLiteConfigurationOptions.RecursiveTriggers">
+      <summary>
+            Gets or sets the flag to indicate whether to enable recursive triggers.
+            </summary>
+    </member>
+    <member name="P:Gemstone.Configuration.SQLite.SQLiteConfigurationOptions.TableName">
+      <summary>
+            Gets or sets the name of the table
+            that stores configuration parameters.
+            </summary>
+    </member>
+    <member name="T:Gemstone.Configuration.SQLite.SQLiteConfigurationProvider">
+      <summary>
+            The provider of configuration from a <see cref="T:Gemstone.Configuration.SQLite.SQLiteConfigurationSource" />.
+            </summary>
+    </member>
+    <member name="M:Gemstone.Configuration.SQLite.SQLiteConfigurationProvider.#ctor(Gemstone.Configuration.SQLite.SQLiteConfigurationOptions)">
+      <summary>
+            Creates a new instance of the <see cref="T:Gemstone.Configuration.SQLite.SQLiteConfigurationProvider" /> class.
+            </summary>
+      <param name="options">The parameters for the configuration source.</param>
+    </member>
+    <member name="M:Gemstone.Configuration.SQLite.SQLiteConfigurationProvider.Load">
+      <summary>
+            Loads (or reloads) the data for this provider.
+            </summary>
+    </member>
+    <member name="M:Gemstone.Configuration.SQLite.SQLiteConfigurationProvider.Set(System.String,System.String)">
+      <summary>
+            Sets a value for a given key.
+            </summary>
+      <param name="key">The configuration key to set.</param>
+      <param name="value">The value to set.</param>
+    </member>
+    <member name="T:Gemstone.Configuration.SQLite.SQLiteConfigurationSource">
+      <summary>
+            The source for configuration stored in a SQLite database.
+            </summary>
+    </member>
+    <member name="M:Gemstone.Configuration.SQLite.SQLiteConfigurationSource.#ctor(System.Action{Gemstone.Configuration.SQLite.SQLiteConfigurationOptions})">
+      <summary>
+            Creates a new instance of the <see cref="T:Gemstone.Configuration.SQLite.SQLiteConfigurationSource" /> class.
+            </summary>
+      <param name="optionsAction">The action called to set parameters for the source.</param>
+    </member>
+    <member name="M:Gemstone.Configuration.SQLite.SQLiteConfigurationSource.Build(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
+      <summary>
+            Builds an <see cref="T:Microsoft.Extensions.Configuration.IConfigurationProvider" /> from the SQLite configuration source.
+            </summary>
+      <param name="builder">The configuration builder.</param>
+      <returns>The configuration provider.</returns>
+    </member>
+  </members>
+</doc>
