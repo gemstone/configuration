@@ -34,7 +34,7 @@ namespace Gemstone.Configuration.AppSettings
     public static class AppSettingsExtensions
     {
         private const string InitialValueKey = "__AppSettings:InitialValue";
-        private const string DescriptionKey = "__AppSettings:InitialValue";
+        private const string DescriptionKey = "__AppSettings:Description";
 
         /// <summary>
         /// Adds an <see cref="IConfigurationSource"/> for app settings to the given <see cref="IConfigurationBuilder"/>.
