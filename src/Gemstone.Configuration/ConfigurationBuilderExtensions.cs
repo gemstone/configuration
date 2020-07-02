@@ -48,7 +48,6 @@ namespace Gemstone.Configuration
         /// <returns>The configuration builder.</returns>
         public static IConfigurationBuilder ConfigureGemstoneDefaults(this IConfigurationBuilder builder, Action<IAppSettingsBuilder> configureAppSettings, bool useINI = false)
         {
-            builder.Sources.Clear();
             builder.AddAppSettings(configureAppSettings).AsReadOnly();
 
             if (useINI)
