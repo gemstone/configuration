@@ -74,10 +74,14 @@ namespace Gemstone.Configuration
                     return builder;
 
                 iniPath = GetINIFilePath("defaults.ini");
-                contents = File.ReadAllText(iniPath);
 
-                if (contents == defaultContents)
-                    return builder;
+                if (File.Exists(iniPath))
+                {
+                    contents = File.ReadAllText(iniPath);
+
+                    if (contents == defaultContents)
+                        return builder;
+                }
             }
 
             using (TextWriter writer = GetINIFileWriter(iniPath))
@@ -140,7 +144,7 @@ namespace Gemstone.Configuration
                 }
             }
 
-            static bool HasAppSetting(IConfigurationSection section) =>
+            static bool HasAppSetting(IConfiguration section) =>
                 section.GetChildren().Any(HasAppSettingDescription);
 
             static bool HasAppSettingDescription(IConfigurationSection setting) =>
@@ -167,9 +171,9 @@ namespace Gemstone.Configuration
                 return string.Join(Environment.NewLine, lines);
             }
 
-            static string ConvertSectionToINI(IConfigurationSection section)
+            static string ConvertConfigToINI(IConfiguration config)
             {
-                IEnumerable<string> settings = section.GetChildren()
+                IEnumerable<string> settings = config.GetChildren()
                     .Where(HasAppSettingDescription)
                     .OrderBy(setting => setting.Key)
                     .Select(setting => ConvertSettingToINI(setting));
@@ -178,22 +182,22 @@ namespace Gemstone.Configuration
                 string settingsText = string.Join(settingSeparator, settings);
 
                 // The root section has no heading
-                if (string.IsNullOrEmpty(section.Key))
+                if (!(config is ConfigurationSection section))
                     return settingsText;
 
                 return string.Join(Environment.NewLine, $"[{section.Key}]", settingsText);
             }
 
-            // Root section MUST go before all other sections, so the order is important:
+            // Root MUST go before all other sections, so the order is important:
             //     1. Sort by section key
-            //     2. Prepend root section
+            //     2. Prepend root
             //     3. Filter out sections without any app settings
             IEnumerable<string> appSettingsSections = configuration.AsEnumerable()
                 .Select(kvp => configuration.GetSection(kvp.Key))
                 .OrderBy(section => section.Key)
-                .Prepend(configuration.GetSection(""))
+                .Prepend(configuration)
                 .Where(HasAppSetting)
-                .Select(ConvertSectionToINI);
+                .Select(ConvertConfigToINI);
 
             string sectionSeparator = string.Format("{0}{0}", Environment.NewLine);
             return string.Join(sectionSeparator, appSettingsSections);
