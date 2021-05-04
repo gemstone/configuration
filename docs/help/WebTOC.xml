@@ -2,44 +2,44 @@
 <HelpTOC>
 
   <HelpTOCNode Title="About" Url="html/About.htm" />
-  <HelpTOCNode Id="25b20093-2a09-45b1-a6b0-9d0ba553ea32" Title="Gemstone.Configuration" Url="html/N_Gemstone_Configuration.htm">
-    <HelpTOCNode Id="94ef440f-1f5b-439e-a4ee-5c77693dd43f" Title="ConfigurationBuilderExtensions Class" Url="html/T_Gemstone_Configuration_ConfigurationBuilderExtensions.htm">
-      <HelpTOCNode Id="b28c16fd-ad15-4d46-b7fc-4005e647bf9f" Title="ConfigurationBuilderExtensions Methods" Url="html/Methods_T_Gemstone_Configuration_ConfigurationBuilderExtensions.htm">
+  <HelpTOCNode Id="afed4b9f-36ea-4847-94cd-742e22d6c19f" Title="Gemstone.Configuration" Url="html/N_Gemstone_Configuration.htm">
+    <HelpTOCNode Id="15928992-61fa-40cc-b3e7-ac4c62f0b31e" Title="ConfigurationBuilderExtensions Class" Url="html/T_Gemstone_Configuration_ConfigurationBuilderExtensions.htm">
+      <HelpTOCNode Id="a7315dd6-fbfa-446c-b55b-ea8abbb24603" Title="ConfigurationBuilderExtensions Methods" Url="html/Methods_T_Gemstone_Configuration_ConfigurationBuilderExtensions.htm">
         <HelpTOCNode Title="ConfigureGemstoneDefaults Method " Url="html/M_Gemstone_Configuration_ConfigurationBuilderExtensions_ConfigureGemstoneDefaults.htm" />
       </HelpTOCNode>
     </HelpTOCNode>
   </HelpTOCNode>
-  <HelpTOCNode Id="29c6733c-76e4-43ad-a69d-01cac24622bd" Title="Gemstone.Configuration.AppSettings" Url="html/N_Gemstone_Configuration_AppSettings.htm">
-    <HelpTOCNode Id="23062cc8-4fbf-4394-bb52-9ffb1fa1bada" Title="AppSettingsExtensions Class" Url="html/T_Gemstone_Configuration_AppSettings_AppSettingsExtensions.htm">
-      <HelpTOCNode Id="737243ed-1207-447c-9de7-ef5d820885c6" Title="AppSettingsExtensions Methods" Url="html/Methods_T_Gemstone_Configuration_AppSettings_AppSettingsExtensions.htm">
+  <HelpTOCNode Id="3f2c032f-189c-44f3-a49e-3965192a967a" Title="Gemstone.Configuration.AppSettings" Url="html/N_Gemstone_Configuration_AppSettings.htm">
+    <HelpTOCNode Id="d45f5ab3-ca09-4968-b531-18e51e0d5da3" Title="AppSettingsExtensions Class" Url="html/T_Gemstone_Configuration_AppSettings_AppSettingsExtensions.htm">
+      <HelpTOCNode Id="c6d98fdd-910b-48a2-84f0-8d00b6557aa9" Title="AppSettingsExtensions Methods" Url="html/Methods_T_Gemstone_Configuration_AppSettings_AppSettingsExtensions.htm">
         <HelpTOCNode Title="AddAppSettings Method " Url="html/M_Gemstone_Configuration_AppSettings_AppSettingsExtensions_AddAppSettings.htm" />
-        <HelpTOCNode Id="f2fcaeb0-cb7f-4380-bb30-1798bce6721c" Title="GetAppSettingDescription Method " Url="html/Overload_Gemstone_Configuration_AppSettings_AppSettingsExtensions_GetAppSettingDescription.htm">
+        <HelpTOCNode Id="55dbaf2d-5a25-41b0-b7e9-5ffa39573e2b" Title="GetAppSettingDescription Method " Url="html/Overload_Gemstone_Configuration_AppSettings_AppSettingsExtensions_GetAppSettingDescription.htm">
           <HelpTOCNode Title="GetAppSettingDescription Method (IConfigurationSection)" Url="html/M_Gemstone_Configuration_AppSettings_AppSettingsExtensions_GetAppSettingDescription_1.htm" />
           <HelpTOCNode Title="GetAppSettingDescription Method (IConfiguration, String)" Url="html/M_Gemstone_Configuration_AppSettings_AppSettingsExtensions_GetAppSettingDescription.htm" />
         </HelpTOCNode>
-        <HelpTOCNode Id="915f5894-72e3-4ad3-a9c7-98f775111d07" Title="GetAppSettingInitialValue Method " Url="html/Overload_Gemstone_Configuration_AppSettings_AppSettingsExtensions_GetAppSettingInitialValue.htm">
+        <HelpTOCNode Id="5927b373-4e32-4e99-a7a4-3625f88af37f" Title="GetAppSettingInitialValue Method " Url="html/Overload_Gemstone_Configuration_AppSettings_AppSettingsExtensions_GetAppSettingInitialValue.htm">
           <HelpTOCNode Title="GetAppSettingInitialValue Method (IConfigurationSection)" Url="html/M_Gemstone_Configuration_AppSettings_AppSettingsExtensions_GetAppSettingInitialValue_1.htm" />
           <HelpTOCNode Title="GetAppSettingInitialValue Method (IConfiguration, String)" Url="html/M_Gemstone_Configuration_AppSettings_AppSettingsExtensions_GetAppSettingInitialValue.htm" />
         </HelpTOCNode>
       </HelpTOCNode>
     </HelpTOCNode>
-    <HelpTOCNode Id="da2a55e4-a445-480e-8b70-57ed44db37f6" Title="IAppSettingsBuilder Interface" Url="html/T_Gemstone_Configuration_AppSettings_IAppSettingsBuilder.htm">
-      <HelpTOCNode Id="7cc9ab34-2a34-4c1e-afb3-c57e29fd13e8" Title="IAppSettingsBuilder Methods" Url="html/Methods_T_Gemstone_Configuration_AppSettings_IAppSettingsBuilder.htm">
+    <HelpTOCNode Id="50bcd1f1-0d11-46c9-a67a-459c2bf113e7" Title="IAppSettingsBuilder Interface" Url="html/T_Gemstone_Configuration_AppSettings_IAppSettingsBuilder.htm">
+      <HelpTOCNode Id="7be1b57f-b60e-4d6c-8656-4a30bb0add55" Title="IAppSettingsBuilder Methods" Url="html/Methods_T_Gemstone_Configuration_AppSettings_IAppSettingsBuilder.htm">
         <HelpTOCNode Title="Add Method " Url="html/M_Gemstone_Configuration_AppSettings_IAppSettingsBuilder_Add.htm" />
         <HelpTOCNode Title="Build Method " Url="html/M_Gemstone_Configuration_AppSettings_IAppSettingsBuilder_Build.htm" />
       </HelpTOCNode>
     </HelpTOCNode>
   </HelpTOCNode>
-  <HelpTOCNode Id="58d25a21-45e3-4830-b4e8-28e62004ee12" Title="Gemstone.Configuration.ReadOnly" Url="html/N_Gemstone_Configuration_ReadOnly.htm">
-    <HelpTOCNode Id="e747c20a-2469-4174-b862-b151e562fbde" Title="ReadOnlyConfigurationExtensions Class" Url="html/T_Gemstone_Configuration_ReadOnly_ReadOnlyConfigurationExtensions.htm">
-      <HelpTOCNode Id="688eea3c-308c-4f62-a5f9-2a67d82c75f9" Title="ReadOnlyConfigurationExtensions Methods" Url="html/Methods_T_Gemstone_Configuration_ReadOnly_ReadOnlyConfigurationExtensions.htm">
+  <HelpTOCNode Id="39031e95-20a0-4174-85ed-3136c1309293" Title="Gemstone.Configuration.ReadOnly" Url="html/N_Gemstone_Configuration_ReadOnly.htm">
+    <HelpTOCNode Id="85b16efa-bd9e-4717-8e79-9db548fb8216" Title="ReadOnlyConfigurationExtensions Class" Url="html/T_Gemstone_Configuration_ReadOnly_ReadOnlyConfigurationExtensions.htm">
+      <HelpTOCNode Id="5f6c238e-e847-40ca-a403-560a090f524a" Title="ReadOnlyConfigurationExtensions Methods" Url="html/Methods_T_Gemstone_Configuration_ReadOnly_ReadOnlyConfigurationExtensions.htm">
         <HelpTOCNode Title="AsReadOnly Method " Url="html/M_Gemstone_Configuration_ReadOnly_ReadOnlyConfigurationExtensions_AsReadOnly.htm" />
         <HelpTOCNode Title="ConfigureReadOnly Method " Url="html/M_Gemstone_Configuration_ReadOnly_ReadOnlyConfigurationExtensions_ConfigureReadOnly.htm" />
       </HelpTOCNode>
     </HelpTOCNode>
-    <HelpTOCNode Id="641e7db0-2e98-4c28-a0da-be496a057219" Title="ReadOnlyConfigurationProvider Class" Url="html/T_Gemstone_Configuration_ReadOnly_ReadOnlyConfigurationProvider.htm">
+    <HelpTOCNode Id="20dbb0c0-88bb-4c9e-910a-23ff1a1d0eb9" Title="ReadOnlyConfigurationProvider Class" Url="html/T_Gemstone_Configuration_ReadOnly_ReadOnlyConfigurationProvider.htm">
       <HelpTOCNode Title="ReadOnlyConfigurationProvider Constructor " Url="html/M_Gemstone_Configuration_ReadOnly_ReadOnlyConfigurationProvider__ctor.htm" />
-      <HelpTOCNode Id="043befbc-e295-4e8d-98fb-cb13e2adf56c" Title="ReadOnlyConfigurationProvider Methods" Url="html/Methods_T_Gemstone_Configuration_ReadOnly_ReadOnlyConfigurationProvider.htm">
+      <HelpTOCNode Id="8aeba7cd-53c9-47f5-bda0-422b6c08f8f1" Title="ReadOnlyConfigurationProvider Methods" Url="html/Methods_T_Gemstone_Configuration_ReadOnly_ReadOnlyConfigurationProvider.htm">
         <HelpTOCNode Title="GetChildKeys Method " Url="html/M_Gemstone_Configuration_ReadOnly_ReadOnlyConfigurationProvider_GetChildKeys.htm" />
         <HelpTOCNode Title="GetReloadToken Method " Url="html/M_Gemstone_Configuration_ReadOnly_ReadOnlyConfigurationProvider_GetReloadToken.htm" />
         <HelpTOCNode Title="Load Method " Url="html/M_Gemstone_Configuration_ReadOnly_ReadOnlyConfigurationProvider_Load.htm" />
@@ -47,25 +47,25 @@
         <HelpTOCNode Title="TryGet Method " Url="html/M_Gemstone_Configuration_ReadOnly_ReadOnlyConfigurationProvider_TryGet.htm" />
       </HelpTOCNode>
     </HelpTOCNode>
-    <HelpTOCNode Id="9b1b3adc-ae5a-45dc-9581-6d5f32a21f0b" Title="ReadOnlyConfigurationSource Class" Url="html/T_Gemstone_Configuration_ReadOnly_ReadOnlyConfigurationSource.htm">
+    <HelpTOCNode Id="e0592e8a-8e98-4417-87c2-08ec2a944b03" Title="ReadOnlyConfigurationSource Class" Url="html/T_Gemstone_Configuration_ReadOnly_ReadOnlyConfigurationSource.htm">
       <HelpTOCNode Title="ReadOnlyConfigurationSource Constructor " Url="html/M_Gemstone_Configuration_ReadOnly_ReadOnlyConfigurationSource__ctor.htm" />
-      <HelpTOCNode Id="c004cc66-5ddc-425a-8ce9-2fff6422633c" Title="ReadOnlyConfigurationSource Methods" Url="html/Methods_T_Gemstone_Configuration_ReadOnly_ReadOnlyConfigurationSource.htm">
+      <HelpTOCNode Id="02dab837-5daa-453a-8f3c-9ed0fbca452f" Title="ReadOnlyConfigurationSource Methods" Url="html/Methods_T_Gemstone_Configuration_ReadOnly_ReadOnlyConfigurationSource.htm">
         <HelpTOCNode Title="Build Method " Url="html/M_Gemstone_Configuration_ReadOnly_ReadOnlyConfigurationSource_Build.htm" />
       </HelpTOCNode>
     </HelpTOCNode>
   </HelpTOCNode>
-  <HelpTOCNode Id="89096ced-79fc-4544-8ddd-955940d33644" Title="Gemstone.Configuration.SQLite" Url="html/N_Gemstone_Configuration_SQLite.htm">
-    <HelpTOCNode Id="9abe86e3-e093-4cc8-bc52-1b0d553b79c8" Title="SQLiteConfigurationExtensions Class" Url="html/T_Gemstone_Configuration_SQLite_SQLiteConfigurationExtensions.htm">
-      <HelpTOCNode Id="16e886b0-85fc-484e-a35d-37fa555df182" Title="SQLiteConfigurationExtensions Methods" Url="html/Methods_T_Gemstone_Configuration_SQLite_SQLiteConfigurationExtensions.htm">
-        <HelpTOCNode Id="da84ffbc-3aa9-44e0-8243-dc725ac081a8" Title="AddSQLite Method " Url="html/Overload_Gemstone_Configuration_SQLite_SQLiteConfigurationExtensions_AddSQLite.htm">
+  <HelpTOCNode Id="97123205-845d-4867-8935-7b6f7b918bfd" Title="Gemstone.Configuration.SQLite" Url="html/N_Gemstone_Configuration_SQLite.htm">
+    <HelpTOCNode Id="3697e2fa-95dd-4732-952d-fbce9d53fe94" Title="SQLiteConfigurationExtensions Class" Url="html/T_Gemstone_Configuration_SQLite_SQLiteConfigurationExtensions.htm">
+      <HelpTOCNode Id="0ab8c7b9-9a9d-40e8-b96c-997e61d6b5c6" Title="SQLiteConfigurationExtensions Methods" Url="html/Methods_T_Gemstone_Configuration_SQLite_SQLiteConfigurationExtensions.htm">
+        <HelpTOCNode Id="848b6a2f-af64-4b81-b663-f62aad385432" Title="AddSQLite Method " Url="html/Overload_Gemstone_Configuration_SQLite_SQLiteConfigurationExtensions_AddSQLite.htm">
           <HelpTOCNode Title="AddSQLite Method (IConfigurationBuilder)" Url="html/M_Gemstone_Configuration_SQLite_SQLiteConfigurationExtensions_AddSQLite.htm" />
           <HelpTOCNode Title="AddSQLite Method (IConfigurationBuilder, Action(SQLiteConfigurationOptions))" Url="html/M_Gemstone_Configuration_SQLite_SQLiteConfigurationExtensions_AddSQLite_1.htm" />
         </HelpTOCNode>
       </HelpTOCNode>
     </HelpTOCNode>
-    <HelpTOCNode Id="42ab5314-886b-457f-be5a-76473031512f" Title="SQLiteConfigurationOptions Class" Url="html/T_Gemstone_Configuration_SQLite_SQLiteConfigurationOptions.htm">
+    <HelpTOCNode Id="c541df02-f668-4fb5-b47a-59014dd8d2f6" Title="SQLiteConfigurationOptions Class" Url="html/T_Gemstone_Configuration_SQLite_SQLiteConfigurationOptions.htm">
       <HelpTOCNode Title="SQLiteConfigurationOptions Constructor " Url="html/M_Gemstone_Configuration_SQLite_SQLiteConfigurationOptions__ctor.htm" />
-      <HelpTOCNode Id="e8805b5e-45c8-425d-b0ea-5ac6d3e30760" Title="SQLiteConfigurationOptions Properties" Url="html/Properties_T_Gemstone_Configuration_SQLite_SQLiteConfigurationOptions.htm">
+      <HelpTOCNode Id="c5eafc5b-6733-4b3d-ae11-380572db4f12" Title="SQLiteConfigurationOptions Properties" Url="html/Properties_T_Gemstone_Configuration_SQLite_SQLiteConfigurationOptions.htm">
         <HelpTOCNode Title="Cache Property " Url="html/P_Gemstone_Configuration_SQLite_SQLiteConfigurationOptions_Cache.htm" />
         <HelpTOCNode Title="ConnectionString Property " Url="html/P_Gemstone_Configuration_SQLite_SQLiteConfigurationOptions_ConnectionString.htm" />
         <HelpTOCNode Title="DataSource Property " Url="html/P_Gemstone_Configuration_SQLite_SQLiteConfigurationOptions_DataSource.htm" />
@@ -76,17 +76,17 @@
       </HelpTOCNode>
       <HelpTOCNode Title="SQLiteConfigurationOptions Methods" Url="html/Methods_T_Gemstone_Configuration_SQLite_SQLiteConfigurationOptions.htm" />
     </HelpTOCNode>
-    <HelpTOCNode Id="5af9a7e3-2872-408d-9a8f-83a760a3571c" Title="SQLiteConfigurationProvider Class" Url="html/T_Gemstone_Configuration_SQLite_SQLiteConfigurationProvider.htm">
+    <HelpTOCNode Id="7126c13a-d55f-423c-bb07-2c225c08c382" Title="SQLiteConfigurationProvider Class" Url="html/T_Gemstone_Configuration_SQLite_SQLiteConfigurationProvider.htm">
       <HelpTOCNode Title="SQLiteConfigurationProvider Constructor " Url="html/M_Gemstone_Configuration_SQLite_SQLiteConfigurationProvider__ctor.htm" />
       <HelpTOCNode Title="SQLiteConfigurationProvider Properties" Url="html/Properties_T_Gemstone_Configuration_SQLite_SQLiteConfigurationProvider.htm" />
-      <HelpTOCNode Id="89fb24e9-6b92-4425-bd09-be56974efc82" Title="SQLiteConfigurationProvider Methods" Url="html/Methods_T_Gemstone_Configuration_SQLite_SQLiteConfigurationProvider.htm">
+      <HelpTOCNode Id="addf18ae-44c1-4766-9cf0-3adaf2be5bac" Title="SQLiteConfigurationProvider Methods" Url="html/Methods_T_Gemstone_Configuration_SQLite_SQLiteConfigurationProvider.htm">
         <HelpTOCNode Title="Load Method " Url="html/M_Gemstone_Configuration_SQLite_SQLiteConfigurationProvider_Load.htm" />
         <HelpTOCNode Title="Set Method " Url="html/M_Gemstone_Configuration_SQLite_SQLiteConfigurationProvider_Set.htm" />
       </HelpTOCNode>
     </HelpTOCNode>
-    <HelpTOCNode Id="151eb067-c8da-42e0-9090-dd17935fff08" Title="SQLiteConfigurationSource Class" Url="html/T_Gemstone_Configuration_SQLite_SQLiteConfigurationSource.htm">
+    <HelpTOCNode Id="86a6e42d-590c-465e-b6e8-83f3c1f4c5f8" Title="SQLiteConfigurationSource Class" Url="html/T_Gemstone_Configuration_SQLite_SQLiteConfigurationSource.htm">
       <HelpTOCNode Title="SQLiteConfigurationSource Constructor " Url="html/M_Gemstone_Configuration_SQLite_SQLiteConfigurationSource__ctor.htm" />
-      <HelpTOCNode Id="f43a9d3a-4639-4475-af51-b63a7669739d" Title="SQLiteConfigurationSource Methods" Url="html/Methods_T_Gemstone_Configuration_SQLite_SQLiteConfigurationSource.htm">
+      <HelpTOCNode Id="8fd705a2-a1ed-4ff8-890d-28fb51829e92" Title="SQLiteConfigurationSource Methods" Url="html/Methods_T_Gemstone_Configuration_SQLite_SQLiteConfigurationSource.htm">
         <HelpTOCNode Title="Build Method " Url="html/M_Gemstone_Configuration_SQLite_SQLiteConfigurationSource_Build.htm" />
       </HelpTOCNode>
     </HelpTOCNode>
