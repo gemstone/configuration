@@ -207,7 +207,7 @@ namespace Gemstone.Configuration
         {
             if (!File.Exists(path))
             {
-                string directoryPath = Path.GetDirectoryName(path);
+                string directoryPath = Path.GetDirectoryName(path) ?? string.Empty;
                 Directory.CreateDirectory(directoryPath);
             }
 

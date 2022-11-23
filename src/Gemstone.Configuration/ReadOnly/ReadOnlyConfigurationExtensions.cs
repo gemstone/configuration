@@ -35,7 +35,7 @@ namespace Gemstone.Configuration.ReadOnly
     {
         private class ReferenceEqualityComparer : IEqualityComparer<object>
         {
-            public new bool Equals(object x, object y) =>
+            public new bool Equals(object? x, object? y) =>
                 ReferenceEquals(x, y);
 
             public int GetHashCode(object obj) =>
