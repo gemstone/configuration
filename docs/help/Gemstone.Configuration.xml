@@ -30,6 +30,12 @@
       <param name="configurationBuilder">The configuration builder.</param>
       <param name="buildAction">The action to build app settings.</param>
       <returns>The configuration builder.</returns>
+      <remarks>
+            This extension provides a simple way to add default values as well as descriptions for app settings
+            directly into an application. The source for these is a simple in-memory collection, and additional
+            key/value pairs are added so that the initial value and descriptions of these settings can still be
+            retrieved even if the settings themselves get overridden by another configuration source.
+            </remarks>
     </member>
     <member name="M:Gemstone.Configuration.AppSettings.AppSettingsExtensions.GetAppSettingDescription(Microsoft.Extensions.Configuration.IConfiguration,System.String)">
       <summary>
@@ -94,6 +100,21 @@
             </summary>
       <param name="builder">The configuration builder.</param>
       <returns>The configuration builder.</returns>
+      <remarks>
+        <para>
+            This method is intended to be chained after each source that needs to be made read-only.
+            </para>
+        <code language="cs">
+            IConfiguration configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(defaultSettings).AsReadOnly()
+                .AddIniFile("usersettings.ini").AsReadOnly()
+                .AddSQLite()
+                .Build();
+                
+            // This will only update the SQLite configuration provider
+            configuration["Hello"] = "World";
+            </code>
+      </remarks>
     </member>
     <member name="M:Gemstone.Configuration.ReadOnly.ReadOnlyConfigurationExtensions.ConfigureReadOnly(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.Action{Microsoft.Extensions.Configuration.IConfigurationBuilder})">
       <summary>
@@ -102,6 +123,22 @@
       <param name="builder">The configuration builder.</param>
       <param name="builderAction">The action to set up configuration sources that will be made read-only.</param>
       <returns>The configuration builder.</returns>
+      <remarks>
+        <para>
+            This method is intended to encapsulate the builder action that creates a group of read-only providers.
+            </para>
+        <code language="cs">
+            IConfiguration configuration = new ConfigurationBuilder()
+                .ConfigureReadOnly(readOnlyBuilder =&gt; readOnlyBuilder
+                    .AddInMemoryCollection(defaultSettings)
+                    .AddIniFile("usersettings.ini"))
+                .AddSQLite()
+                .Build();
+                
+            // This will only update the SQLite configuration provider
+            configuration["Hello"] = "World";
+            </code>
+      </remarks>
     </member>
     <member name="T:Gemstone.Configuration.ReadOnly.ReadOnlyConfigurationProvider">
       <summary>
@@ -156,6 +193,14 @@
             Wrapper for <see cref="T:Microsoft.Extensions.Configuration.IConfigurationSource" /> to block calls
             to <see cref="M:Microsoft.Extensions.Configuration.IConfigurationProvider.Set(System.String,System.String)" />.
             </summary>
+      <remarks>
+            Configuration providers are typically designed to load configuration into an in-memory
+            dictionary from their configuration source. Subsequently, the in-memory dictionary can be
+            modified programmatically via the <see cref="P:IConfiguration.Item(int)" /> indexer.
+            This class blocks calls to <see cref="M:Microsoft.Extensions.Configuration.IConfigurationProvider.Set(System.String,System.String)" />
+            on the underlying configuration source's provider so that static defaults won't be
+            modified when updating configuration.
+            </remarks>
     </member>
     <member name="M:Gemstone.Configuration.ReadOnly.ReadOnlyConfigurationSource.#ctor(Microsoft.Extensions.Configuration.IConfigurationSource)">
       <summary>
@@ -182,6 +227,14 @@
             </summary>
       <param name="builder">The configuration builder.</param>
       <returns>The configuration builder.</returns>
+      <remarks>
+        <para>The SQLite configuration source will be configured with default parameters.</para>
+        <list type="bullet">
+          <item>DataSource=%PROGRAMDATA%\[AppName]\settings.db</item>
+          <item>TableName=Setting</item>
+          <item>ReadOnly=False</item>
+        </list>
+      </remarks>
     </member>
     <member name="M:Gemstone.Configuration.SQLite.SQLiteConfigurationExtensions.AddSQLite(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.Action{Gemstone.Configuration.SQLite.SQLiteConfigurationOptions})">
       <summary>
