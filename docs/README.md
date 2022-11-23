@@ -6,7 +6,7 @@
 The Gemstone Configuration Library organizes all Gemstone functionality related to configuration.
 
 [![GitHub license](https://img.shields.io/github/license/gemstone/configuration?color=4CC61E)](https://github.com/gemstone/configuration/blob/master/LICENSE)
-[![Build status](https://ci.appveyor.com/api/projects/status/ury75mtaq7tj1sp0?svg=true)](https://ci.appveyor.com/project/ritchiecarroll/configuration)
+[![Build status](https://ci.appveyor.com/api/projects/status/j8fj7jbneienyh6h?svg=true)](https://ci.appveyor.com/project/ritchiecarroll/configuration)
 ![CodeQL](https://github.com/gemstone/configuration/workflows/CodeQL/badge.svg)
 
 This library includes helpful configuration classes like the following:
