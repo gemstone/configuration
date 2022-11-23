@@ -121,8 +121,7 @@ namespace Gemstone.Configuration.AppSettings
                     Description = description;
                 }
 
-                public KeyValuePair<string, string> ToKeyValuePair() =>
-                    new KeyValuePair<string, string>(Name, Value);
+                public KeyValuePair<string, string> ToKeyValuePair() => new(Name, Value);
 
                 public KeyValuePair<string, string> ToInitialValuePair()
                 {
@@ -147,7 +146,7 @@ namespace Gemstone.Configuration.AppSettings
                 if (AppSettingLookup.ContainsKey(name))
                     throw new ArgumentException($"Unable to add duplicate app setting: {name}", nameof(name));
 
-                AppSetting appSetting = new AppSetting(name, value, description);
+                AppSetting appSetting = new(name, value, description);
                 AppSettingLookup.Add(name, appSetting);
                 return this;
             }

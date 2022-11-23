@@ -137,7 +137,7 @@ namespace Gemstone.Configuration
                                 .ToArray();
                         }
 
-                        string splitLine = new string(chars);
+                        string splitLine = new(chars);
                         leftover = leftover.Substring(splitLine.Length).TrimStart();
                         yield return splitLine;
                     }

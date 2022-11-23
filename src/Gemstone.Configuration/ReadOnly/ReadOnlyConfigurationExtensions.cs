@@ -67,8 +67,8 @@ namespace Gemstone.Configuration.ReadOnly
         /// </remarks>
         public static IConfigurationBuilder ConfigureReadOnly(this IConfigurationBuilder builder, Action<IConfigurationBuilder> builderAction)
         {
-            ReferenceEqualityComparer referenceEqualityComparer = new ReferenceEqualityComparer();
-            HashSet<object> originalSources = new HashSet<object>(builder.Sources, referenceEqualityComparer);
+            ReferenceEqualityComparer referenceEqualityComparer = new();
+            HashSet<object> originalSources = new(builder.Sources, referenceEqualityComparer);
             builderAction(builder);
 
             for (int i = 0; i < builder.Sources.Count; i++)

@@ -47,7 +47,7 @@ namespace Gemstone.Configuration.SQLite
         /// <returns>The configuration provider.</returns>
         public IConfigurationProvider Build(IConfigurationBuilder builder)
         {
-            SQLiteConfigurationOptions options = new SQLiteConfigurationOptions();
+            SQLiteConfigurationOptions options = new();
             OptionsAction(options);
             return new SQLiteConfigurationProvider(options);
         }

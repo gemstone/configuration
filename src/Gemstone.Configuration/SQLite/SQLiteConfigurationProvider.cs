@@ -50,7 +50,7 @@ namespace Gemstone.Configuration.SQLite
         /// </summary>
         public override void Load()
         {
-            using SqliteConnection connection = new SqliteConnection(ConnectionString);
+            using SqliteConnection connection = new(ConnectionString);
             connection.Open();
             CreateTable(connection);
 
@@ -83,7 +83,7 @@ namespace Gemstone.Configuration.SQLite
 
             base.Set(key, value);
 
-            using SqliteConnection connection = new SqliteConnection(ConnectionString);
+            using SqliteConnection connection = new(ConnectionString);
             connection.Open();
             CreateTable(connection);
 
@@ -100,7 +100,7 @@ namespace Gemstone.Configuration.SQLite
             if (!Data.Remove(key))
                 return;
 
-            using SqliteConnection connection = new SqliteConnection(ConnectionString);
+            using SqliteConnection connection = new(ConnectionString);
             connection.Open();
             CreateTable(connection);
 
