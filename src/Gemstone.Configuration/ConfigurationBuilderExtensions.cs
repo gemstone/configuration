@@ -148,7 +148,7 @@ namespace Gemstone.Configuration
                 section.GetChildren().Any(HasAppSettingDescription);
 
             static bool HasAppSettingDescription(IConfigurationSection setting) =>
-                setting.GetAppSettingDescription() != null;
+                setting.GetAppSettingDescription() is not null;
 
             static string ConvertSettingToINI(IConfigurationSection setting)
             {
