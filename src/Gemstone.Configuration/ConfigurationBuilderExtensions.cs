@@ -162,8 +162,7 @@ namespace Gemstone.Configuration
 
                 string multilineDescription = string.Join(Environment.NewLine, descriptionLines);
 
-                string[] lines = new[]
-                {
+                string[] lines = {
                     $"{multilineDescription}",
                     $";{key}={initialValue}"
                 };
