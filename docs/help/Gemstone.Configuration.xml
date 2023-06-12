@@ -127,7 +127,7 @@
         <para>
             This method is intended to encapsulate the builder action that creates a group of read-only providers.
             </para>
-        <code language="cs">
+        <code>
             IConfiguration configuration = new ConfigurationBuilder()
                 .ConfigureReadOnly(readOnlyBuilder =&gt; readOnlyBuilder
                     .AddInMemoryCollection(defaultSettings)
