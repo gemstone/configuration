@@ -3,7 +3,7 @@
 # Configuration
 ### GPA Gemstone Library
 
-The Gemstone Configuration Library organizes all Gemstone functionality related to configuration.
+The Gemstone Configuration Library organizes all Gemstone functionality related to application configuration and settings.
 
 [![GitHub license](https://img.shields.io/github/license/gemstone/configuration?color=4CC61E)](https://github.com/gemstone/configuration/blob/master/LICENSE)
 [![Build status](https://ci.appveyor.com/api/projects/status/j8fj7jbneienyh6h?svg=true)](https://ci.appveyor.com/project/ritchiecarroll/configuration)
