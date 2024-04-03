@@ -43,13 +43,27 @@ namespace Gemstone.Configuration
         /// <param name="builder">The configuration builder.</param>
         /// <param name="settings">Settings for configuring default sources.</param>
         /// <returns>The configuration builder.</returns>
+        /// <remarks>
+        /// This extension function configurations common sources for a Gemstone project. The
+        /// <see cref="Settings"/> instance controls the configuration sources that are available.
+        /// Handling of settings are defined in a hierarchy where the settings are loaded are in
+        /// the following priority order, from lowest to hightest:
+        /// <list type="bullet">
+        ///   <item>INI file (defaults.ini) - Machine Level</item>
+        ///   <item>INI file (settings.ini) - Machine Level</item>
+        ///   <item>SQLite database (settings.db) - User Level</item>
+        ///   <item>Environment variables - Machine Level</item>
+        ///   <item>Environment variables - User Level</item>
+        /// </list>
+        /// </remarks>
         public static IConfigurationBuilder ConfigureGemstoneDefaults(this IConfigurationBuilder builder, Settings settings)
         {
             return builder.ConfigureGemstoneDefaults(
                 settings.ConfigureAppSettings, 
                 settings.INIFile != ConfigurationOperation.Disabled, 
                 settings.SQLite != ConfigurationOperation.Disabled, 
-                settings.SplitINIDescriptionLines);
+                settings.EnvironmentalVariables != ConfigurationOperation.Disabled,
+                settings.SplitDescriptionLines);
         }
 
         /// <summary>
@@ -59,9 +73,29 @@ namespace Gemstone.Configuration
         /// <param name="configureAppSettings">Action for configuring default app settings.</param>
         /// <param name="useINI">INI file can be produced in lieu of a UI for configuration.</param>
         /// <param name="useSQLite">Use SQLite for user configuration storage.</param>
+        /// <param name="useEnvironmentalVariables">Use environmental variables for configuration.</param>
         /// <param name="splitDescriptionLines">Split long description lines into multiple lines.</param>
         /// <returns>The configuration builder.</returns>
-        public static IConfigurationBuilder ConfigureGemstoneDefaults(this IConfigurationBuilder builder, Action<IAppSettingsBuilder> configureAppSettings, bool useINI = false, bool useSQLite = true, bool splitDescriptionLines = false)
+        /// <remarks>
+        /// This extension function configurations common sources for a Gemstone project. The
+        /// provided parameters control the configuration sources that are available.
+        /// Handling of settings are defined in a hierarchy where the settings are loaded are in
+        /// the following priority order, from lowest to hightest:
+        /// <list type="bullet">
+        ///   <item>INI file (defaults.ini) - Machine Level</item>
+        ///   <item>INI file (settings.ini) - Machine Level</item>
+        ///   <item>SQLite database (settings.db) - User Level</item>
+        ///   <item>Environment variables - Machine Level</item>
+        ///   <item>Environment variables - User Level</item>
+        /// </list>
+        /// </remarks>
+        public static IConfigurationBuilder ConfigureGemstoneDefaults(
+            this IConfigurationBuilder builder, 
+            Action<IAppSettingsBuilder> configureAppSettings, 
+            bool useINI = false, 
+            bool useSQLite = true, 
+            bool useEnvironmentalVariables = true, 
+            bool splitDescriptionLines = false)
         {
             builder.AddAppSettings(configureAppSettings).AsReadOnly();
 
@@ -71,7 +105,9 @@ namespace Gemstone.Configuration
             if (useSQLite)
                 builder.AddSQLite();
 
-            builder.AddEnvironmentVariables("GEMSTONE_").AsReadOnly();
+            if (useEnvironmentalVariables)
+                builder.AddEnvironmentVariables("GEMSTONE_").AsReadOnly();
+
             return builder;
         }
 
