@@ -44,10 +44,10 @@ namespace Gemstone.Configuration
         /// <param name="settings">Settings for configuring default sources.</param>
         /// <returns>The configuration builder.</returns>
         /// <remarks>
-        /// This extension function configurations common sources for a Gemstone project. The
-        /// <see cref="Settings"/> instance controls the configuration sources that are available.
-        /// Handling of settings are defined in a hierarchy where the settings are loaded are in
-        /// the following priority order, from lowest to hightest:
+        /// This extension function configures common configuration sources for a Gemstone project. The
+        /// <see cref="Settings"/> instance controls the configuration sources that are available. Handling
+        /// of settings are defined in a hierarchy where the settings are loaded are in the following
+        /// priority order, from lowest to hightest:
         /// <list type="bullet">
         ///   <item>INI file (defaults.ini) - Machine Level</item>
         ///   <item>INI file (settings.ini) - Machine Level</item>
@@ -77,10 +77,10 @@ namespace Gemstone.Configuration
         /// <param name="splitDescriptionLines">Split long description lines into multiple lines.</param>
         /// <returns>The configuration builder.</returns>
         /// <remarks>
-        /// This extension function configurations common sources for a Gemstone project. The
-        /// provided parameters control the configuration sources that are available.
-        /// Handling of settings are defined in a hierarchy where the settings are loaded are in
-        /// the following priority order, from lowest to hightest:
+        /// This extension function configures common configuration sources for a Gemstone project. The
+        /// provided parameters control the configuration sources that are available. Handling of settings
+        /// are defined in a hierarchy where the settings are loaded are in the following priority order,
+        /// from lowest to hightest:
         /// <list type="bullet">
         ///   <item>INI file (defaults.ini) - Machine Level</item>
         ///   <item>INI file (settings.ini) - Machine Level</item>
