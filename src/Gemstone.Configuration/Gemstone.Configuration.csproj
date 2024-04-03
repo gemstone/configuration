@@ -40,6 +40,8 @@
 
   <PropertyGroup Condition="'$(Configuration)'=='Development'">
     <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -63,7 +65,6 @@
     <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Ini" Version="8.0.0" />
 
     <!-- <ProjectReference Include="..\..\..\threading\src\Gemstone.Threading\Gemstone.Threading.csproj" Condition="'$(Configuration)'=='Development'" /> -->
     <!-- <PackageReference Include="Gemstone.Threading" Version="1.0.0" Condition="'$(Configuration)'!='Development'" /> -->
