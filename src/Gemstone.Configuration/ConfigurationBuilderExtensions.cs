@@ -45,7 +45,11 @@ namespace Gemstone.Configuration
         /// <returns>The configuration builder.</returns>
         public static IConfigurationBuilder ConfigureGemstoneDefaults(this IConfigurationBuilder builder, Settings settings)
         {
-            return builder.ConfigureGemstoneDefaults(settings.ConfigureAppSettings, settings.UseINIFile, settings.UseSQLite, settings.SplitINIDescriptionLines);
+            return builder.ConfigureGemstoneDefaults(
+                settings.ConfigureAppSettings, 
+                settings.INIFile != ConfigurationOperation.Disabled, 
+                settings.SQLite != ConfigurationOperation.Disabled, 
+                settings.SplitINIDescriptionLines);
         }
 
         /// <summary>
