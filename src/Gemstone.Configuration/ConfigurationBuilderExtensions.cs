@@ -114,7 +114,7 @@ namespace Gemstone.Configuration
         private static IConfigurationBuilder AddGemstoneINIFile(this IConfigurationBuilder builder, bool splitDescriptionLines)
         {
             IConfiguration configuration = builder.Build();
-            string defaultContents = configuration.GenerateINIFileContents(false, splitDescriptionLines);
+            string defaultContents = configuration.GenerateINIFileContents(INIGenerationOption.CommentedValue, splitDescriptionLines);
 
             string iniPath = GetINIFilePath("settings.ini");
             builder.AddIniFile(iniPath, false, true);
