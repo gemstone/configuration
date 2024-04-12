@@ -51,12 +51,12 @@ public partial class EvalConverter : TypeConverter
         Eval eval = new(expression);
 
         // Handle substituting braced environment variables with expanded values, for example:
-        //   Source Expression: [eval]:{env:APPDATA}\MyApp
-        //  Updated Expression: [eval]:Environment.GetEnvironmentVariable("APPDATA")\MyApp
+        //   Source Expression: {env:APPDATA}\MyApp
+        //  Updated Expression: Environment.GetEnvironmentVariable("APPDATA")\MyApp
 
         // Handle substituting braced setting expressions with expanded / typed settings, for example:
-        //    Source Expression: [eval]:{Alarming.UserDataProtectionTimeout} * 10.0D
-        //   Updated Expression: [eval]:(double)(settings["Alarming"]["UserDataProtectionTimeout"]) * 10.0D
+        //    Source Expression: {Alarming.UserDataProtectionTimeout} * 10.0D
+        //   Updated Expression: (double)(settings["Alarming"]["UserDataProtectionTimeout"]) * 10.0D
 
         // Replace each matching substitution pattern with a proper expansion
         foreach (Match match in s_settingSubstitution.Matches(expression))
