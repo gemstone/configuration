@@ -24,15 +24,14 @@
 using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Configuration;
 
-namespace Gemstone.Configuration.SQLite
+namespace Gemstone.Configuration.SQLite;
+
+/// <summary>
+/// The <see cref="SQLite"/> namespace contains an implementation of
+/// <see cref="IConfigurationSource"/> that uses a SQLite database
+/// table to provide the configuration settings.
+/// </summary>
+[CompilerGenerated]
+class NamespaceDoc
 {
-    /// <summary>
-    /// The <see cref="SQLite"/> namespace contains an implementation of
-    /// <see cref="IConfigurationSource"/> that uses a SQLite database
-    /// table to provide the configuration settings.
-    /// </summary>
-    [CompilerGenerated]
-    class NamespaceDoc
-    {
-    }
 }

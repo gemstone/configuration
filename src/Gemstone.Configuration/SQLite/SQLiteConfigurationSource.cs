@@ -24,32 +24,31 @@
 using System;
 using Microsoft.Extensions.Configuration;
 
-namespace Gemstone.Configuration.SQLite
+namespace Gemstone.Configuration.SQLite;
+
+/// <summary>
+/// The source for configuration stored in a SQLite database.
+/// </summary>
+public class SQLiteConfigurationSource : IConfigurationSource
 {
+    private Action<SQLiteConfigurationOptions> OptionsAction { get; }
+
     /// <summary>
-    /// The source for configuration stored in a SQLite database.
+    /// Creates a new instance of the <see cref="SQLiteConfigurationSource"/> class.
     /// </summary>
-    public class SQLiteConfigurationSource : IConfigurationSource
+    /// <param name="optionsAction">The action called to set parameters for the source.</param>
+    public SQLiteConfigurationSource(Action<SQLiteConfigurationOptions> optionsAction) =>
+        OptionsAction = optionsAction;
+
+    /// <summary>
+    /// Builds an <see cref="IConfigurationProvider"/> from the SQLite configuration source.
+    /// </summary>
+    /// <param name="builder">The configuration builder.</param>
+    /// <returns>The configuration provider.</returns>
+    public IConfigurationProvider Build(IConfigurationBuilder builder)
     {
-        private Action<SQLiteConfigurationOptions> OptionsAction { get; }
-
-        /// <summary>
-        /// Creates a new instance of the <see cref="SQLiteConfigurationSource"/> class.
-        /// </summary>
-        /// <param name="optionsAction">The action called to set parameters for the source.</param>
-        public SQLiteConfigurationSource(Action<SQLiteConfigurationOptions> optionsAction) =>
-            OptionsAction = optionsAction;
-
-        /// <summary>
-        /// Builds an <see cref="IConfigurationProvider"/> from the SQLite configuration source.
-        /// </summary>
-        /// <param name="builder">The configuration builder.</param>
-        /// <returns>The configuration provider.</returns>
-        public IConfigurationProvider Build(IConfigurationBuilder builder)
-        {
             SQLiteConfigurationOptions options = new();
             OptionsAction(options);
             return new SQLiteConfigurationProvider(options);
         }
-    }
 }

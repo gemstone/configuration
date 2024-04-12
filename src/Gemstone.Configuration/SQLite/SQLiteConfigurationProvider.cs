@@ -24,32 +24,32 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 
-namespace Gemstone.Configuration.SQLite
-{
-    /// <summary>
-    /// The provider of configuration from a <see cref="SQLiteConfigurationSource"/>.
-    /// </summary>
-    public class SQLiteConfigurationProvider : ConfigurationProvider
-    {
-        private string ConnectionString { get; }
-        private string TableName { get; }
-        private bool IsTableCreated { get; set; }
+namespace Gemstone.Configuration.SQLite;
 
-        /// <summary>
-        /// Creates a new instance of the <see cref="SQLiteConfigurationProvider"/> class.
-        /// </summary>
-        /// <param name="options">The parameters for the configuration source.</param>
-        public SQLiteConfigurationProvider(SQLiteConfigurationOptions options)
-        {
+/// <summary>
+/// The provider of configuration from a <see cref="SQLiteConfigurationSource"/>.
+/// </summary>
+public class SQLiteConfigurationProvider : ConfigurationProvider
+{
+    private string ConnectionString { get; }
+    private string TableName { get; }
+    private bool IsTableCreated { get; set; }
+
+    /// <summary>
+    /// Creates a new instance of the <see cref="SQLiteConfigurationProvider"/> class.
+    /// </summary>
+    /// <param name="options">The parameters for the configuration source.</param>
+    public SQLiteConfigurationProvider(SQLiteConfigurationOptions options)
+    {
             ConnectionString = options.ConnectionString;
             TableName = options.TableName;
         }
 
-        /// <summary>
-        /// Loads (or reloads) the data for this provider.
-        /// </summary>
-        public override void Load()
-        {
+    /// <summary>
+    /// Loads (or reloads) the data for this provider.
+    /// </summary>
+    public override void Load()
+    {
             using SqliteConnection connection = new(ConnectionString);
             connection.Open();
             CreateTable(connection);
@@ -68,13 +68,13 @@ namespace Gemstone.Configuration.SQLite
             }
         }
 
-        /// <summary>
-        /// Sets a value for a given key.
-        /// </summary>
-        /// <param name="key">The configuration key to set.</param>
-        /// <param name="value">The value to set.</param>
-        public override void Set(string key, string value)
-        {
+    /// <summary>
+    /// Sets a value for a given key.
+    /// </summary>
+    /// <param name="key">The configuration key to set.</param>
+    /// <param name="value">The value to set.</param>
+    public override void Set(string key, string value)
+    {
             if (string.IsNullOrEmpty(value))
             {
                 Remove(key);
@@ -95,8 +95,8 @@ namespace Gemstone.Configuration.SQLite
             OnReload();
         }
 
-        private void Remove(string key)
-        {
+    private void Remove(string key)
+    {
             if (!Data.Remove(key))
                 return;
 
@@ -111,8 +111,8 @@ namespace Gemstone.Configuration.SQLite
             OnReload();
         }
 
-        private void CreateTable(SqliteConnection connection)
-        {
+    private void CreateTable(SqliteConnection connection)
+    {
             if (IsTableCreated)
                 return;
 
@@ -121,5 +121,4 @@ namespace Gemstone.Configuration.SQLite
             command.ExecuteNonQuery();
             IsTableCreated = true;
         }
-    }
 }

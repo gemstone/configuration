@@ -30,34 +30,34 @@ using Gemstone.Configuration.SQLite;
 using Microsoft.Extensions.Configuration;
 using static Gemstone.Configuration.INIConfigurationHelpers;
 
-namespace Gemstone.Configuration
+namespace Gemstone.Configuration;
+
+/// <summary>
+/// Defines extensions for setting up configuration defaults for Gemstone projects.
+/// </summary>
+public static class ConfigurationBuilderExtensions
 {
     /// <summary>
-    /// Defines extensions for setting up configuration defaults for Gemstone projects.
+    /// Configures the builder using the defined settings from Gemstone project configuration sources.
     /// </summary>
-    public static class ConfigurationBuilderExtensions
+    /// <param name="builder">The configuration builder.</param>
+    /// <param name="settings">Settings for configuring default sources.</param>
+    /// <returns>The configuration builder.</returns>
+    /// <remarks>
+    /// This extension function configures common configuration sources for a Gemstone project. The
+    /// <see cref="Settings"/> instance controls the configuration sources that are available. Handling
+    /// of settings are defined in a hierarchy where the settings are loaded are in the following
+    /// priority order, from lowest to hightest:
+    /// <list type="bullet">
+    ///   <item>INI file (defaults.ini) - Machine Level</item>
+    ///   <item>INI file (settings.ini) - Machine Level</item>
+    ///   <item>SQLite database (settings.db) - User Level</item>
+    ///   <item>Environment variables - Machine Level</item>
+    ///   <item>Environment variables - User Level</item>
+    /// </list>
+    /// </remarks>
+    public static IConfigurationBuilder ConfigureGemstoneDefaults(this IConfigurationBuilder builder, Settings settings)
     {
-        /// <summary>
-        /// Configures the builder using the defined settings from Gemstone project configuration sources.
-        /// </summary>
-        /// <param name="builder">The configuration builder.</param>
-        /// <param name="settings">Settings for configuring default sources.</param>
-        /// <returns>The configuration builder.</returns>
-        /// <remarks>
-        /// This extension function configures common configuration sources for a Gemstone project. The
-        /// <see cref="Settings"/> instance controls the configuration sources that are available. Handling
-        /// of settings are defined in a hierarchy where the settings are loaded are in the following
-        /// priority order, from lowest to hightest:
-        /// <list type="bullet">
-        ///   <item>INI file (defaults.ini) - Machine Level</item>
-        ///   <item>INI file (settings.ini) - Machine Level</item>
-        ///   <item>SQLite database (settings.db) - User Level</item>
-        ///   <item>Environment variables - Machine Level</item>
-        ///   <item>Environment variables - User Level</item>
-        /// </list>
-        /// </remarks>
-        public static IConfigurationBuilder ConfigureGemstoneDefaults(this IConfigurationBuilder builder, Settings settings)
-        {
             return builder.ConfigureGemstoneDefaults(
                 settings.ConfigureAppSettings, 
                 settings.INIFile != ConfigurationOperation.Disabled, 
@@ -66,37 +66,37 @@ namespace Gemstone.Configuration
                 settings.SplitDescriptionLines);
         }
 
-        /// <summary>
-        /// Configures the builder using the default configuration sources for Gemstone projects.
-        /// </summary>
-        /// <param name="builder">The configuration builder.</param>
-        /// <param name="configureAppSettings">Action for configuring default app settings.</param>
-        /// <param name="useINI">INI file can be produced in lieu of a UI for configuration.</param>
-        /// <param name="useSQLite">Use SQLite for user configuration storage.</param>
-        /// <param name="useEnvironmentalVariables">Use environmental variables for configuration.</param>
-        /// <param name="splitDescriptionLines">Split long description lines into multiple lines.</param>
-        /// <returns>The configuration builder.</returns>
-        /// <remarks>
-        /// This extension function configures common configuration sources for a Gemstone project. The
-        /// provided parameters control the configuration sources that are available. Handling of settings
-        /// are defined in a hierarchy where the settings are loaded are in the following priority order,
-        /// from lowest to hightest:
-        /// <list type="bullet">
-        ///   <item>INI file (defaults.ini) - Machine Level</item>
-        ///   <item>INI file (settings.ini) - Machine Level</item>
-        ///   <item>SQLite database (settings.db) - User Level</item>
-        ///   <item>Environment variables - Machine Level</item>
-        ///   <item>Environment variables - User Level</item>
-        /// </list>
-        /// </remarks>
-        public static IConfigurationBuilder ConfigureGemstoneDefaults(
-            this IConfigurationBuilder builder, 
-            Action<IAppSettingsBuilder> configureAppSettings, 
-            bool useINI = false, 
-            bool useSQLite = true, 
-            bool useEnvironmentalVariables = true, 
-            bool splitDescriptionLines = false)
-        {
+    /// <summary>
+    /// Configures the builder using the default configuration sources for Gemstone projects.
+    /// </summary>
+    /// <param name="builder">The configuration builder.</param>
+    /// <param name="configureAppSettings">Action for configuring default app settings.</param>
+    /// <param name="useINI">INI file can be produced in lieu of a UI for configuration.</param>
+    /// <param name="useSQLite">Use SQLite for user configuration storage.</param>
+    /// <param name="useEnvironmentalVariables">Use environmental variables for configuration.</param>
+    /// <param name="splitDescriptionLines">Split long description lines into multiple lines.</param>
+    /// <returns>The configuration builder.</returns>
+    /// <remarks>
+    /// This extension function configures common configuration sources for a Gemstone project. The
+    /// provided parameters control the configuration sources that are available. Handling of settings
+    /// are defined in a hierarchy where the settings are loaded are in the following priority order,
+    /// from lowest to hightest:
+    /// <list type="bullet">
+    ///   <item>INI file (defaults.ini) - Machine Level</item>
+    ///   <item>INI file (settings.ini) - Machine Level</item>
+    ///   <item>SQLite database (settings.db) - User Level</item>
+    ///   <item>Environment variables - Machine Level</item>
+    ///   <item>Environment variables - User Level</item>
+    /// </list>
+    /// </remarks>
+    public static IConfigurationBuilder ConfigureGemstoneDefaults(
+        this IConfigurationBuilder builder, 
+        Action<IAppSettingsBuilder> configureAppSettings, 
+        bool useINI = false, 
+        bool useSQLite = true, 
+        bool useEnvironmentalVariables = true, 
+        bool splitDescriptionLines = false)
+    {
             builder.AddAppSettings(configureAppSettings).AsReadOnly();
 
             if (useINI)
@@ -111,8 +111,8 @@ namespace Gemstone.Configuration
             return builder;
         }
 
-        private static IConfigurationBuilder AddGemstoneINIFile(this IConfigurationBuilder builder, bool splitDescriptionLines)
-        {
+    private static IConfigurationBuilder AddGemstoneINIFile(this IConfigurationBuilder builder, bool splitDescriptionLines)
+    {
             IConfiguration configuration = builder.Build();
             string defaultContents = configuration.GenerateINIFileContents(INIGenerationOption.CommentedValue, splitDescriptionLines);
 
@@ -142,5 +142,4 @@ namespace Gemstone.Configuration
 
             return builder;
         }
-    }
 }

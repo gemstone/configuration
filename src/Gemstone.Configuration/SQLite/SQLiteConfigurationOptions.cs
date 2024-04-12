@@ -23,83 +23,82 @@
 
 using Microsoft.Data.Sqlite;
 
-namespace Gemstone.Configuration.SQLite
+namespace Gemstone.Configuration.SQLite;
+
+/// <summary>
+/// Defines parameters for the <see cref="SQLiteConfigurationSource"/>.
+/// </summary>
+public class SQLiteConfigurationOptions
 {
+    private SqliteConnectionStringBuilder ConnectionStringBuilder { get; }
+
     /// <summary>
-    /// Defines parameters for the <see cref="SQLiteConfigurationSource"/>.
+    /// Creates a new instance of the <see cref="SQLiteConfigurationOptions"/> class.
     /// </summary>
-    public class SQLiteConfigurationOptions
+    public SQLiteConfigurationOptions()
     {
-        private SqliteConnectionStringBuilder ConnectionStringBuilder { get; }
-
-        /// <summary>
-        /// Creates a new instance of the <see cref="SQLiteConfigurationOptions"/> class.
-        /// </summary>
-        public SQLiteConfigurationOptions()
-        {
-            ConnectionStringBuilder = new SqliteConnectionStringBuilder();
-            ConnectionStringBuilder.Mode = SqliteOpenMode.ReadWriteCreate;
-            TableName = "Setting";
-        }
-
-        /// <summary>
-        /// Gets or sets the name of the table
-        /// that stores configuration parameters.
-        /// </summary>
-        public string TableName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the path to the database file.
-        /// </summary>
-        public string DataSource
-        {
-            get => ConnectionStringBuilder.DataSource;
-            set => ConnectionStringBuilder.DataSource = value;
-        }
-
-        /// <summary>
-        /// Gets or sets the encryption key.
-        /// </summary>
-        public string Password
-        {
-            get => ConnectionStringBuilder.Password;
-            set => ConnectionStringBuilder.Password = value;
-        }
-
-        /// <summary>
-        /// Gets or sets the flag that determines whether
-        /// to enable foreign key constraints.
-        /// </summary>
-        public bool? ForeignKeys
-        {
-            get => ConnectionStringBuilder.ForeignKeys;
-            set => ConnectionStringBuilder.ForeignKeys = value;
-        }
-
-        /// <summary>
-        /// Gets or sets the cahcing mode used
-        /// by connections to the database.
-        /// </summary>
-        public SqliteCacheMode Cache
-        {
-            get => ConnectionStringBuilder.Cache;
-            set => ConnectionStringBuilder.Cache = value;
-        }
-
-        /// <summary>
-        /// Gets or sets the flag to indicate whether to enable recursive triggers.
-        /// </summary>
-        public bool RecursiveTriggers
-        {
-            get => ConnectionStringBuilder.RecursiveTriggers;
-            set => ConnectionStringBuilder.RecursiveTriggers = value;
-        }
-
-        /// <summary>
-        /// Gets the connection string as configured
-        /// by the other properties in this class.
-        /// </summary>
-        public string ConnectionString =>
-            ConnectionStringBuilder.ConnectionString;
+        ConnectionStringBuilder = new SqliteConnectionStringBuilder();
+        ConnectionStringBuilder.Mode = SqliteOpenMode.ReadWriteCreate;
+        TableName = "Setting";
     }
+
+    /// <summary>
+    /// Gets or sets the name of the table
+    /// that stores configuration parameters.
+    /// </summary>
+    public string TableName { get; set; }
+
+    /// <summary>
+    /// Gets or sets the path to the database file.
+    /// </summary>
+    public string DataSource
+    {
+        get => ConnectionStringBuilder.DataSource;
+        set => ConnectionStringBuilder.DataSource = value;
+    }
+
+    /// <summary>
+    /// Gets or sets the encryption key.
+    /// </summary>
+    public string Password
+    {
+        get => ConnectionStringBuilder.Password;
+        set => ConnectionStringBuilder.Password = value;
+    }
+
+    /// <summary>
+    /// Gets or sets the flag that determines whether
+    /// to enable foreign key constraints.
+    /// </summary>
+    public bool? ForeignKeys
+    {
+        get => ConnectionStringBuilder.ForeignKeys;
+        set => ConnectionStringBuilder.ForeignKeys = value;
+    }
+
+    /// <summary>
+    /// Gets or sets the cahcing mode used
+    /// by connections to the database.
+    /// </summary>
+    public SqliteCacheMode Cache
+    {
+        get => ConnectionStringBuilder.Cache;
+        set => ConnectionStringBuilder.Cache = value;
+    }
+
+    /// <summary>
+    /// Gets or sets the flag to indicate whether to enable recursive triggers.
+    /// </summary>
+    public bool RecursiveTriggers
+    {
+        get => ConnectionStringBuilder.RecursiveTriggers;
+        set => ConnectionStringBuilder.RecursiveTriggers = value;
+    }
+
+    /// <summary>
+    /// Gets the connection string as configured
+    /// by the other properties in this class.
+    /// </summary>
+    public string ConnectionString =>
+        ConnectionStringBuilder.ConnectionString;
 }
