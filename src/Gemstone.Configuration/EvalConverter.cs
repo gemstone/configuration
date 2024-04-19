@@ -73,9 +73,9 @@ public partial class EvalConverter : TypeConverter
                 while (typedValue is Eval evalInstance)
                     typedValue = evalInstance.Value;
 
-                expression = expression.Replace(match.Value, typedValue is not null && typedValue is not string ?
-                    $"({typedValue.GetType().GetReflectedTypeName()})(settings[\"{section}\"][\"{key}\"])" :
-                    $"settings[\"{section}\"][\"{key}\"]");
+                expression = expression.Replace(match.Value, typedValue is null or string ?
+                    $"settings[\"{section}\"][\"{key}\"]" :
+                    $"({typedValue.GetType().GetReflectedTypeName()})(settings[\"{section}\"][\"{key}\"])");
             }
             else
             {

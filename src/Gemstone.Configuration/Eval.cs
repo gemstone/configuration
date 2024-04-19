@@ -29,7 +29,7 @@ namespace Gemstone.Configuration;
 
 /// <summary>
 /// Represents an evaluation type used to hold an expression to evaluate
-/// as well as methods to execute the evaluation.
+/// as well as return the value of the evaluation execution.
 /// </summary>
 /// <remarks>
 /// Expected use of this class is with expression-based <see cref="Settings"/>.
@@ -54,7 +54,7 @@ public class Eval(string expression)
     public string? TranspiledExpression { get; set; }
 
     /// <summary>
-    /// Gets or sets the result of the expression evaluation.
+    /// Gets or sets the result of the expression evaluation. Value is cached.
     /// </summary>
     /// <remarks>
     /// When <see cref="Value"/> is uninitialized, i.e., <c>null</c>, expression
