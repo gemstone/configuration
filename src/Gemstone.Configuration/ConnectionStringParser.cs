@@ -100,7 +100,10 @@ public class ConnectionStringParser
         public ConnectionStringProperty(PropertyInfo propertyInfo, TypeRegistry? typeRegistry = null)
         {
             PropertyInfo = propertyInfo;
-            Names = propertyInfo.TryGetAttribute(out SettingNameAttribute? settingNameAttribute) ? settingNameAttribute.Names : new[] { propertyInfo.Name };
+            Names = propertyInfo.TryGetAttribute(out SettingNameAttribute? settingNameAttribute) ? settingNameAttribute.Names :
+            [
+                propertyInfo.Name
+            ];
 
             bool hasDefaultValue = propertyInfo.TryGetAttribute(out DefaultValueAttribute? defaultValueAttribute);
             bool hasDefaultValueExpression = propertyInfo.TryGetAttribute(out DefaultValueExpressionAttribute? defaultValueExpressionAttribute);
@@ -377,7 +380,7 @@ public class ConnectionStringParser
     /// <returns>A connection string converted from XML.</returns>
     public static string ToConnectionString(XElement element)
     {
-        char[] reserved = { ';', '=', '{', '}' };
+        char[] reserved = [';', '=', '{', '}'];
 
         string name = element.Name.ToString();
 
@@ -585,6 +588,5 @@ public class ConnectionStringParser<TParameterAttribute, TNestedSettingsAttribut
     // be used during parsing or composing of connection strings
     private static string[] GetNames(PropertyInfo property) =>
         property.TryGetAttribute(out SettingNameAttribute? settingNameAttribute) ? 
-            settingNameAttribute.Names : 
-            new[] { property.Name };
+            settingNameAttribute.Names : [property.Name];
 }
