@@ -139,6 +139,16 @@ public class ConnectionStringParser
                     Converter = (TypeConverter)Activator.CreateInstance(converterType);
             }
 
+            //If property is hidden from UI, no longer required
+            if (
+                propertyInfo.TryGetAttribute(out EditorBrowsableAttribute? editorBrowsableAttribute) &&
+                editorBrowsableAttribute is not null &&
+                editorBrowsableAttribute.State == EditorBrowsableState.Never
+                )
+            {
+                Required = false;
+            }
+
             propertyInfo.TryGetAttributes(out ValidationAttributes);
         }
     }
@@ -466,7 +476,7 @@ public class ConnectionStringParser<TParameterAttribute> : ConnectionStringParse
     /// </summary>
     /// <param name="settingsObjectType">The type of the settings object used to look up properties via reflection.</param>
     /// <returns>The set of properties which are part of the connection string.</returns>
-    protected override ConnectionStringProperty[] GetConnectionStringProperties(Type settingsObjectType) => 
+    protected override ConnectionStringProperty[] GetConnectionStringProperties(Type settingsObjectType) =>
         s_connectionStringPropertiesLookup.GetOrAdd(settingsObjectType, s_valueFactory);
 
     #endregion
@@ -587,6 +597,6 @@ public class ConnectionStringParser<TParameterAttribute, TNestedSettingsAttribut
     // Gets a collection of names for the given property which can
     // be used during parsing or composing of connection strings
     private static string[] GetNames(PropertyInfo property) =>
-        property.TryGetAttribute(out SettingNameAttribute? settingNameAttribute) ? 
+        property.TryGetAttribute(out SettingNameAttribute? settingNameAttribute) ?
             settingNameAttribute.Names : [property.Name];
 }
