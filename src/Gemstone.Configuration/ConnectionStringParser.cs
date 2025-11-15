@@ -307,23 +307,24 @@ public class ConnectionStringParser
         {
             value = string.Empty;
             string? key = property.Names.FirstOrDefault(name => settings.TryGetValue(name, out value));
+            bool skip = false;
 
             if (key is not null)
                 try
                 {
                     property.PropertyInfo.SetValue(settingsObject, ConvertToPropertyType(value, property));
                 }
-                catch (Exception ex) {}
+                catch (Exception ex) { skip = true; }
             else if (!property.Required)
                 try
                 { 
                     property.PropertyInfo.SetValue(settingsObject, property.DefaultValue);
                 }
-                catch (Exception ex) { }
+                catch (Exception ex) { skip = true; }
             else
                 throw new ArgumentException("Unable to parse required connection string parameter because it does not exist in the connection string.", property.Names.First());
 
-            if (property.ValidationAttributes is null)
+            if (property.ValidationAttributes is null || skip)
                 continue;
 
             object propertyValue = property.PropertyInfo.GetValue(settingsObject);
