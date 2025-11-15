@@ -300,15 +300,26 @@ public class ConnectionStringParser
         // Parse the connection string into a dictionary of key-value pairs for easy lookups
         Dictionary<string, string> settings = connectionString.ParseKeyValuePairs(ParameterDelimiter, KeyValueDelimiter, StartValueDelimiter, EndValueDelimiter);
 
+        // until we figure out how to parse InputMesurementKeys and OutputMeasurementKeys properly, skip anything that can't be deserialized
+        // this is very temporary
+
         foreach (ConnectionStringProperty property in connectionStringProperties)
         {
             value = string.Empty;
             string? key = property.Names.FirstOrDefault(name => settings.TryGetValue(name, out value));
 
             if (key is not null)
-                property.PropertyInfo.SetValue(settingsObject, ConvertToPropertyType(value, property));
+                try
+                {
+                    property.PropertyInfo.SetValue(settingsObject, ConvertToPropertyType(value, property));
+                }
+                catch (Exception ex) {}
             else if (!property.Required)
-                property.PropertyInfo.SetValue(settingsObject, property.DefaultValue);
+                try
+                { 
+                    property.PropertyInfo.SetValue(settingsObject, property.DefaultValue);
+                }
+                catch (Exception ex) { }
             else
                 throw new ArgumentException("Unable to parse required connection string parameter because it does not exist in the connection string.", property.Names.First());
 
