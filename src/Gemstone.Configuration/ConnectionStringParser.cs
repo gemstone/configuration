@@ -129,6 +129,12 @@ public class ConnectionStringParser
                 {
                     DefaultValue = defaultValueAttribute.Value;
                 }
+
+                if (DefaultValue is string str && propertyInfo.PropertyType.IsEnum)
+                {
+                    if (Enum.TryParse(propertyInfo.PropertyType, str, true, out object? enumValue))
+                        DefaultValue = enumValue;
+                }
             }
 
             if (propertyInfo.TryGetAttribute(out TypeConverterAttribute? typeConverterAttribute))
