@@ -221,6 +221,17 @@
             custom types. Set to <c>null</c> to restore use of the default type registry.
             </remarks>
     </member>
+    <member name="T:Gemstone.Configuration.ConnectionStringParser`1.IIgnorableParameter">
+      <summary>
+            Interface for connection string parameters that should be ignored when parsing.
+            </summary>
+    </member>
+    <member name="P:Gemstone.Configuration.ConnectionStringParser`1.IIgnorableParameter.IgnoreWhenParsing">
+      <summary>
+            Gets a value that determines whether the connection string parameter should
+            be ignored by the <see cref="T:Gemstone.Configuration.ConnectionStringParser`1" />.
+            </summary>
+    </member>
     <member name="T:Gemstone.Configuration.ConnectionStringParser`2">
       <summary>
             Parses connection strings based on a settings object whose properties are annotated with
