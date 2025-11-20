@@ -129,6 +129,12 @@ public class ConnectionStringParser
                 {
                     DefaultValue = defaultValueAttribute.Value;
                 }
+
+                if (DefaultValue is string str && propertyInfo.PropertyType.IsEnum)
+                {
+                    if (Enum.TryParse(propertyInfo.PropertyType, str, true, out object? enumValue))
+                        DefaultValue = enumValue;
+                }
             }
 
             if (propertyInfo.TryGetAttribute(out TypeConverterAttribute? typeConverterAttribute))
@@ -466,6 +472,24 @@ public class ConnectionStringParser
 /// </typeparam>
 public class ConnectionStringParser<TParameterAttribute> : ConnectionStringParser where TParameterAttribute : Attribute
 {
+    #region [ Members ]
+
+    // Nested Types
+
+    /// <summary>
+    /// Interface for connection string parameters that should be ignored when parsing.
+    /// </summary>
+    public interface IIgnorableParameter
+    {
+        /// <summary>
+        /// Gets a value that determines whether the connection string parameter should
+        /// be ignored by the <see cref="ConnectionStringParser{TParameterAttribute}"/>.
+        /// </summary>
+        bool IgnoreWhenParsing { get; }
+    }
+
+    #endregion
+
     #region [ Properties ]
 
     /// <summary>
@@ -501,7 +525,7 @@ public class ConnectionStringParser<TParameterAttribute> : ConnectionStringParse
 
     private static readonly Func<Type, ConnectionStringProperty[]> s_valueFactory = t => t.GetProperties(BindingFlags.Public | BindingFlags.Instance)
         .Where(property => property.CanRead && property.CanWrite)
-        .Where(property => property.TryGetAttribute(out TParameterAttribute? _))
+        .Where(HasParameterAttribute)
         .Select(property => new ConnectionStringProperty(property, s_typeRegistry))
         .ToArray();
 
@@ -525,6 +549,18 @@ public class ConnectionStringParser<TParameterAttribute> : ConnectionStringParse
     }
 
     #endregion
+
+    // Static Methods
+    private static bool HasParameterAttribute(PropertyInfo property)
+    {
+        if (!property.TryGetAttribute(out TParameterAttribute? attribute))
+            return false;
+
+        if (attribute is IIgnorableParameter ignorable)
+            return !ignorable.IgnoreWhenParsing;
+
+        return true;
+    }
 }
 
 /// <summary>
