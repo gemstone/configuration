@@ -58,13 +58,13 @@ public static class ConfigurationBuilderExtensions
     /// </remarks>
     public static IConfigurationBuilder ConfigureGemstoneDefaults(this IConfigurationBuilder builder, Settings settings)
     {
-            return builder.ConfigureGemstoneDefaults(
-                settings.ConfigureAppSettings, 
-                settings.INIFile != ConfigurationOperation.Disabled, 
-                settings.SQLite != ConfigurationOperation.Disabled, 
-                settings.EnvironmentalVariables != ConfigurationOperation.Disabled,
-                settings.SplitDescriptionLines);
-        }
+        return builder.ConfigureGemstoneDefaults(
+            settings.ConfigureAppSettings,
+            settings.INIFile != ConfigurationOperation.Disabled,
+            settings.SQLite != ConfigurationOperation.Disabled,
+            settings.EnvironmentalVariables != ConfigurationOperation.Disabled,
+            settings.SplitDescriptionLines);
+    }
 
     /// <summary>
     /// Configures the builder using the default configuration sources for Gemstone projects.
@@ -97,49 +97,34 @@ public static class ConfigurationBuilderExtensions
         bool useEnvironmentalVariables = true, 
         bool splitDescriptionLines = false)
     {
-            builder.AddAppSettings(configureAppSettings).AsReadOnly();
+        builder.AddAppSettings(configureAppSettings).AsReadOnly();
 
-            if (useINI)
-                builder.AddGemstoneINIFile(splitDescriptionLines).AsReadOnly();
+        if (useINI)
+            builder.AddGemstoneINIFile(splitDescriptionLines).AsReadOnly();
 
-            if (useSQLite)
-                builder.AddSQLite();
+        if (useSQLite)
+            builder.AddSQLite();
 
-            if (useEnvironmentalVariables)
-                builder.AddEnvironmentVariables("GEMSTONE_").AsReadOnly();
+        if (useEnvironmentalVariables)
+            builder.AddEnvironmentVariables("GEMSTONE_").AsReadOnly();
 
-            return builder;
-        }
+        return builder;
+    }
 
     private static IConfigurationBuilder AddGemstoneINIFile(this IConfigurationBuilder builder, bool splitDescriptionLines)
     {
-            IConfiguration configuration = builder.Build();
-            string defaultContents = configuration.GenerateINIFileContents(INIGenerationOption.CommentedValue, splitDescriptionLines);
+        IConfiguration configuration = builder.Build();
+        string defaultContents = configuration.GenerateINIFileContents(INIGenerationOption.UncommentedValue, splitDescriptionLines);
 
-            string iniPath = GetINIFilePath("settings.ini");
-            builder.AddIniFile(iniPath, false, true);
+        string iniPath = GetINIFilePath("settings.ini");
+        builder.AddIniFile(iniPath, false, true);
+        if (!File.Exists(iniPath))
+            GetINIFileWriter(iniPath).Dispose();
 
-            if (File.Exists(iniPath))
-            {
-                string contents = File.ReadAllText(iniPath);
+        string defaultsPath = GetINIFilePath("defaults.ini");
+        using TextWriter writer = GetINIFileWriter(defaultsPath);
+        writer.Write(defaultContents);
 
-                if (contents == defaultContents)
-                    return builder;
-
-                iniPath = GetINIFilePath("defaults.ini");
-
-                if (File.Exists(iniPath))
-                {
-                    contents = File.ReadAllText(iniPath);
-
-                    if (contents == defaultContents)
-                        return builder;
-                }
-            }
-
-            using TextWriter writer = GetINIFileWriter(iniPath);
-            writer.Write(defaultContents);
-
-            return builder;
-        }
+        return builder;
+    }
 }
