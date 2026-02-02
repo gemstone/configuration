@@ -114,18 +114,22 @@ public static class ConfigurationBuilderExtensions
         return builder;
     }
 
-    private static IConfigurationBuilder AddGemstoneINIFile(this IConfigurationBuilder builder, bool splitDescriptionLines, string? configuredINIPath = null)
+    private static IConfigurationBuilder AddGemstoneINIFile(this IConfigurationBuilder builder, bool splitDescriptionLines, string? configuredINIPath)
     {
         IConfiguration configuration = builder.Build();
+        string iniFilePath = GetINIFilePath("settings.ini", configuredINIPath);
+
+        builder.AddIniFile(iniFilePath, false, true);
+
+        // Create an empty settings file if none exists
+        if (!File.Exists(iniFilePath))
+            GetINIFileWriter(iniFilePath).Dispose();
+
+        // Create, or recreate, default settings file
         string defaultContents = configuration.GenerateINIFileContents(INIGenerationOption.UncommentedValue, splitDescriptionLines);
-
-        string iniPath = GetINIFilePath("settings.ini", configuredINIPath);
-        builder.AddIniFile(iniPath, false, true);
-        if (!File.Exists(iniPath))
-            GetINIFileWriter(iniPath).Dispose();
-
         string defaultsPath = GetINIFilePath("defaults.ini", configuredINIPath);
         using TextWriter writer = GetINIFileWriter(defaultsPath);
+
         writer.Write(defaultContents);
 
         return builder;
