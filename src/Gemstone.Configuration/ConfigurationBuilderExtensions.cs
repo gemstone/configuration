@@ -63,7 +63,8 @@ public static class ConfigurationBuilderExtensions
             settings.INIFile != ConfigurationOperation.Disabled,
             settings.SQLite != ConfigurationOperation.Disabled,
             settings.EnvironmentalVariables != ConfigurationOperation.Disabled,
-            settings.SplitDescriptionLines);
+            settings.SplitDescriptionLines,
+            settings.ConfiguredINIPath);
     }
 
     /// <summary>
@@ -75,6 +76,7 @@ public static class ConfigurationBuilderExtensions
     /// <param name="useSQLite">Use SQLite for user configuration storage.</param>
     /// <param name="useEnvironmentalVariables">Use environmental variables for configuration.</param>
     /// <param name="splitDescriptionLines">Split long description lines into multiple lines.</param>
+    /// <param name="configuredINIPath">Configured INI path. Set to <c>null</c> for default %ProgramData% path.</param>
     /// <returns>The configuration builder.</returns>
     /// <remarks>
     /// This extension function configures common configuration sources for a Gemstone project. The
@@ -95,12 +97,13 @@ public static class ConfigurationBuilderExtensions
         bool useINI = false, 
         bool useSQLite = true, 
         bool useEnvironmentalVariables = true, 
-        bool splitDescriptionLines = false)
+        bool splitDescriptionLines = false,
+        string? configuredINIPath = null)
     {
         builder.AddAppSettings(configureAppSettings).AsReadOnly();
 
         if (useINI)
-            builder.AddGemstoneINIFile(splitDescriptionLines).AsReadOnly();
+            builder.AddGemstoneINIFile(splitDescriptionLines, configuredINIPath).AsReadOnly();
 
         if (useSQLite)
             builder.AddSQLite();
@@ -111,17 +114,17 @@ public static class ConfigurationBuilderExtensions
         return builder;
     }
 
-    private static IConfigurationBuilder AddGemstoneINIFile(this IConfigurationBuilder builder, bool splitDescriptionLines)
+    private static IConfigurationBuilder AddGemstoneINIFile(this IConfigurationBuilder builder, bool splitDescriptionLines, string? configuredINIPath = null)
     {
         IConfiguration configuration = builder.Build();
         string defaultContents = configuration.GenerateINIFileContents(INIGenerationOption.UncommentedValue, splitDescriptionLines);
 
-        string iniPath = GetINIFilePath("settings.ini");
+        string iniPath = GetINIFilePath("settings.ini", configuredINIPath);
         builder.AddIniFile(iniPath, false, true);
         if (!File.Exists(iniPath))
             GetINIFileWriter(iniPath).Dispose();
 
-        string defaultsPath = GetINIFilePath("defaults.ini");
+        string defaultsPath = GetINIFilePath("defaults.ini", configuredINIPath);
         using TextWriter writer = GetINIFileWriter(defaultsPath);
         writer.Write(defaultContents);
 
