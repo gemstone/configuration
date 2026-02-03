@@ -23,7 +23,7 @@
             priority order, from lowest to hightest:
             <list type="bullet"><item>INI file (defaults.ini) - Machine Level</item><item>INI file (settings.ini) - Machine Level</item><item>SQLite database (settings.db) - User Level</item><item>Environment variables - Machine Level</item><item>Environment variables - User Level</item></list></remarks>
     </member>
-    <member name="M:Gemstone.Configuration.ConfigurationBuilderExtensions.ConfigureGemstoneDefaults(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.Action{Gemstone.Configuration.AppSettings.IAppSettingsBuilder},System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+    <member name="M:Gemstone.Configuration.ConfigurationBuilderExtensions.ConfigureGemstoneDefaults(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.Action{Gemstone.Configuration.AppSettings.IAppSettingsBuilder},System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.String)">
       <summary>
             Configures the builder using the default configuration sources for Gemstone projects.
             </summary>
@@ -33,6 +33,7 @@
       <param name="useSQLite">Use SQLite for user configuration storage.</param>
       <param name="useEnvironmentalVariables">Use environmental variables for configuration.</param>
       <param name="splitDescriptionLines">Split long description lines into multiple lines.</param>
+      <param name="configuredINIPath">Configured INI path. Set to <c>null</c> for default %ProgramData% path.</param>
       <returns>The configuration builder.</returns>
       <remarks>
             This extension function configures common configuration sources for a Gemstone project. The
