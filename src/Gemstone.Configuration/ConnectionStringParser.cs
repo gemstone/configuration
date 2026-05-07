@@ -23,6 +23,7 @@
 //
 //******************************************************************************************************
 // ReSharper disable StaticMemberInGenericType
+// ReSharper disable ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
 
 using System;
 using System.Collections.Concurrent;
@@ -76,7 +77,7 @@ public class ConnectionStringParser
         /// The default value of the property if its value
         /// is not explicitly specified in the connection string.
         /// </summary>
-        public object DefaultValue;
+        public object? DefaultValue;
 
         /// <summary>
         /// Indicates whether or not the property is required
@@ -112,7 +113,7 @@ public class ConnectionStringParser
 
             if (Required)
             {
-                DefaultValue = default!;
+                DefaultValue = null!;
             }
             else
             {
@@ -142,15 +143,12 @@ public class ConnectionStringParser
                 Type? converterType = Type.GetType(typeConverterAttribute.ConverterTypeName);
 
                 if (converterType is not null)
-                    Converter = (TypeConverter)Activator.CreateInstance(converterType);
+                    Converter = (TypeConverter)Activator.CreateInstance(converterType)!;
             }
 
-            //If property is hidden from UI, no longer required
-            if (
-                propertyInfo.TryGetAttribute(out EditorBrowsableAttribute? editorBrowsableAttribute) &&
-                editorBrowsableAttribute is not null &&
-                editorBrowsableAttribute.State == EditorBrowsableState.Never
-                )
+            // If property is hidden from UI, no longer required
+            if (propertyInfo.TryGetAttribute(out EditorBrowsableAttribute? editorBrowsableAttribute) &&
+                editorBrowsableAttribute?.State == EditorBrowsableState.Never)
             {
                 Required = false;
             }
@@ -275,7 +273,7 @@ public class ConnectionStringParser
         Dictionary<string, string> settings = connectionStringProperties
             .Select(property => Tuple.Create(property, property.PropertyInfo.GetValue(settingsObject)))
             .Where(tuple => tuple.Item2 is not null && (ExplicitlySpecifyDefaults || !tuple.Item2.Equals(tuple.Item1.DefaultValue)))
-            .ToDictionary(tuple => tuple.Item1.Names.First(), tuple => ConvertToString(tuple.Item2, tuple.Item1), StringComparer.CurrentCultureIgnoreCase);
+            .ToDictionary(tuple => tuple.Item1.Names.First(), tuple => ConvertToString(tuple.Item2!, tuple.Item1), StringComparer.CurrentCultureIgnoreCase);
 
         // Convert the dictionary to a connection string and return the result
         return settings.JoinKeyValuePairs(ParameterDelimiter, KeyValueDelimiter, StartValueDelimiter, EndValueDelimiter);
@@ -398,7 +396,7 @@ public class ConnectionStringParser
     private static readonly Func<Type, ConnectionStringProperty[]> s_allPropertiesFactory = t =>
     {
         return t.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-            .Where(property => property.CanRead && property.CanWrite)
+            .Where(property => property is { CanRead: true, CanWrite: true })
             .Where(property => !property.TryGetAttribute(out SerializeSettingAttribute? attribute) || attribute.Serialize)
             .Select(property => new ConnectionStringProperty(property))
             .ToArray();
@@ -407,7 +405,7 @@ public class ConnectionStringParser
     private static readonly Func<Type, ConnectionStringProperty[]> s_explicitPropertiesFactory = t =>
     {
         return t.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-            .Where(property => property.CanRead && property.CanWrite)
+            .Where(property => property is { CanRead: true, CanWrite: true })
             .Where(property => property.TryGetAttribute(out SerializeSettingAttribute? attribute) && attribute.Serialize)
             .Select(property => new ConnectionStringProperty(property))
             .ToArray();
@@ -537,11 +535,20 @@ public class ConnectionStringParser<TParameterAttribute> : ConnectionStringParse
     private static readonly ConcurrentDictionary<Type, ConnectionStringProperty[]> s_connectionStringPropertiesLookup = new();
     private static TypeRegistry? s_typeRegistry;
 
-    private static readonly Func<Type, ConnectionStringProperty[]> s_valueFactory = t => t.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-        .Where(property => property.CanRead && property.CanWrite)
-        .Where(HasParameterAttribute)
-        .Select(property => new ConnectionStringProperty(property, s_typeRegistry))
-        .ToArray();
+    private static readonly Func<Type, ConnectionStringProperty[]> s_valueFactory = t =>
+    {
+        PropertyInfo[] candidates = t.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+            .Where(property => property is { CanRead: true, CanWrite: true })
+            .ToArray();
+
+        foreach (PropertyInfo property in candidates)
+            ValidateIgnoreParameterConsistency(property);
+
+        return candidates
+            .Where(HasParameterAttribute)
+            .Select(property => new ConnectionStringProperty(property, s_typeRegistry))
+            .ToArray();
+    };
 
     // Static Properties
 
@@ -574,6 +581,51 @@ public class ConnectionStringParser<TParameterAttribute> : ConnectionStringParse
             return !ignorable.IgnoreWhenParsing;
 
         return true;
+    }
+
+    // Verifies that a property's IIgnorableParameter.IgnoreWhenParsing value is
+    // consistent with any base class declarations of the same property that also
+    // carry the parameter attribute. Catches the common bug where a derived class
+    // overrides a virtual property, reapplies the parameter attribute, but forgets
+    // to set IgnoreWhenParsing to match the base — silently re-enabling auto-parse
+    // on a property the base intended to handle manually. Runs once per type via
+    // the s_valueFactory cache, so the cost is paid only on first use.
+    private static void ValidateIgnoreParameterConsistency(PropertyInfo property)
+    {
+        if (!property.TryGetAttribute(out TParameterAttribute? derivedAttribute))
+            return;
+
+        if (derivedAttribute is not IIgnorableParameter derivedIgnorable)
+            return;
+
+        Type? baseType = property.DeclaringType?.BaseType;
+        string propertyName = property.Name;
+
+        while (baseType is not null)
+        {
+            PropertyInfo? baseProperty = baseType.GetProperty(propertyName, 
+                BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+
+            if (baseProperty is not null)
+            {
+                object[] baseAttrs = baseProperty.GetCustomAttributes(typeof(TParameterAttribute), inherit: false);
+
+                if (baseAttrs.Length > 0 && baseAttrs[0] is IIgnorableParameter baseIgnorable &&
+                    baseIgnorable.IgnoreWhenParsing != derivedIgnorable.IgnoreWhenParsing)
+                {
+                    throw new InvalidOperationException(
+                        $"Inconsistent {nameof(IIgnorableParameter)}.{nameof(IIgnorableParameter.IgnoreWhenParsing)} " +
+                        $"in inheritance hierarchy: property '{property.DeclaringType?.FullName}.{propertyName}' has " +
+                        $"{nameof(IIgnorableParameter.IgnoreWhenParsing)}={derivedIgnorable.IgnoreWhenParsing}, but the " +
+                        $"base declaration in '{baseType.FullName}' has " +
+                        $"{nameof(IIgnorableParameter.IgnoreWhenParsing)}={baseIgnorable.IgnoreWhenParsing}. " +
+                        $"Override must keep {nameof(IIgnorableParameter.IgnoreWhenParsing)} consistent with the base.");
+                }
+            }
+
+            // 'System.Object.BaseType' returns null which will terminate hierarchy validation
+            baseType = baseType.BaseType;
+        }
     }
 }
 
@@ -609,7 +661,7 @@ public class ConnectionStringParser<TParameterAttribute, TNestedSettingsAttribut
 
         foreach (PropertyInfo property in GetNestedSettingsProperties(settingsObject))
         {
-            object nestedSettingsObject = property.GetValue(settingsObject);
+            object? nestedSettingsObject = property.GetValue(settingsObject);
 
             if (nestedSettingsObject is not null)
                 builder.Append($"; {GetNames(property).First()}={{ {ComposeConnectionString(nestedSettingsObject)} }}");
@@ -627,14 +679,14 @@ public class ConnectionStringParser<TParameterAttribute, TNestedSettingsAttribut
     /// <exception cref="ArgumentException">A required connection string parameter cannot be found in the connection string.</exception>
     public override void ParseConnectionString(string connectionString, object settingsObject)
     {
-        string nestedSettings;
+        string? nestedSettings;
 
         base.ParseConnectionString(connectionString, settingsObject);
         Dictionary<string, string> settings = connectionString.ParseKeyValuePairs();
 
         foreach (PropertyInfo property in GetNestedSettingsProperties(settingsObject))
         {
-            object nestedSettingsObject = property.GetValue(settingsObject);
+            object? nestedSettingsObject = property.GetValue(settingsObject);
             nestedSettings = string.Empty;
 
             if (nestedSettingsObject is null)
