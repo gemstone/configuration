@@ -37,6 +37,7 @@ using Gemstone.Expressions.Evaluator;
 using Gemstone.Expressions.Model;
 using Gemstone.Reflection.MemberInfoExtensions;
 using Gemstone.StringExtensions;
+using Microsoft.Extensions.Logging;
 
 namespace Gemstone.Configuration;
 
@@ -290,7 +291,7 @@ public class ConnectionStringParser
     /// <exception cref="ArgumentException">A required connection string parameter cannot be found in the connection string.</exception>
     public virtual void ParseConnectionString(string connectionString, object settingsObject)
     {
-        string value;
+        string? value;
 
         // Null objects don't have properties
         if (settingsObject is null)
@@ -306,7 +307,7 @@ public class ConnectionStringParser
         // Parse the connection string into a dictionary of key-value pairs for easy lookups
         Dictionary<string, string> settings = connectionString.ParseKeyValuePairs(ParameterDelimiter, KeyValueDelimiter, StartValueDelimiter, EndValueDelimiter);
 
-        // until we figure out how to parse InputMesurementKeys and OutputMeasurementKeys properly, skip anything that can't be deserialized
+        // until we figure out how to parse InputMeasurementKeys and OutputMeasurementKeys properly, skip anything that can't be deserialized
         // this is very temporary
 
         foreach (ConnectionStringProperty property in connectionStringProperties)
@@ -316,24 +317,45 @@ public class ConnectionStringParser
             bool skip = false;
 
             if (key is not null)
+            {
+                // JRC: Manually ignoring 'InputMeasurementKeys' and 'OutputMeasurements' properties for now since
+                // these are currently cannot be handled through `ConvertToPropertyType` method and will simply throw
+                // and exception, be caught and set to skip. This try/catch in combination with reflection is very
+                // expensive in adapter load chain where many thousands of adapters will all have these properties:
+                if (key.Equals("InputMeasurementKeys", StringComparison.OrdinalIgnoreCase) || key.Equals("OutputMeasurements", StringComparison.OrdinalIgnoreCase))
+                    continue;
+
                 try
                 {
                     property.PropertyInfo.SetValue(settingsObject, ConvertToPropertyType(value, property));
                 }
-                catch (Exception ex) { skip = true; }
+                catch (Exception ex)
+                {
+                    skip = true;
+                    LibraryEvents.OnSuppressedException(this, ex);
+                }
+            }
             else if (!property.Required)
+            {
                 try
-                { 
+                {
                     property.PropertyInfo.SetValue(settingsObject, property.DefaultValue);
                 }
-                catch (Exception ex) { skip = true; }
+                catch (Exception ex)
+                {
+                    skip = true;
+                    LibraryEvents.OnSuppressedException(this, ex);
+                }
+            }
             else
+            {
                 throw new ArgumentException("Unable to parse required connection string parameter because it does not exist in the connection string.", property.Names.First());
+            }
 
             if (property.ValidationAttributes is null || skip)
                 continue;
 
-            object propertyValue = property.PropertyInfo.GetValue(settingsObject);
+            object? propertyValue = property.PropertyInfo.GetValue(settingsObject);
             string propertyName = key ?? property.Names.First();
 
             foreach (ValidationAttribute attr in property.ValidationAttributes)
