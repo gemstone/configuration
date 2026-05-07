@@ -317,13 +317,6 @@ public class ConnectionStringParser
 
             if (key is not null)
             {
-                // JRC: Manually ignoring "InputMeasurementKeys" and "OutputMeasurements" properties for now since
-                // these currently cannot be handled through `ConvertToPropertyType` method and will simply throw
-                // an exception, be caught and set to skip. This try/catch in combination with reflection is very
-                // expensive in adapter load chain where many thousands of adapters will all have these properties:
-                if (key.Equals("InputMeasurementKeys", StringComparison.OrdinalIgnoreCase) || key.Equals("OutputMeasurements", StringComparison.OrdinalIgnoreCase))
-                    continue;
-
                 try
                 {
                     property.PropertyInfo.SetValue(settingsObject, ConvertToPropertyType(value, property));
