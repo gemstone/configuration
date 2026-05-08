@@ -113,7 +113,7 @@ public class ConnectionStringParser
 
             if (Required)
             {
-                DefaultValue = null!;
+                DefaultValue = null;
             }
             else
             {
